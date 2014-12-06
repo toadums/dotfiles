@@ -13,6 +13,10 @@ for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
 done
 ```
 
+Install Vundle
+
+`https://github.com/gmarik/Vundle.vim`
+
 Install CommandT (Vim plugin)
 
 `https://github.com/wincent/Command-T`
