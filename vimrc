@@ -2,7 +2,7 @@ set encoding=utf-8
 set nocompatible               " be iMproved
 filetype off                   " required!
 
-set rtp+=~/.vim/bundle/Vundle.vim
+set rtp+=~/.vim/bundle/vundle
 call vundle#begin()
 
 " let Vundle manage Vundle
@@ -390,14 +390,5 @@ nnoremap <leader>w <C-w>v<C-w>l
 nnoremap ys :YRShow<CR>
 vnoremap ys <ESC>:YRShow<CR>
 nnoremap <leader>d yyp$
-
-
-
-
-
-
-
-
-
 
 
