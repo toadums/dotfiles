@@ -17,61 +17,67 @@ Bundle 'gmarik/vundle'
 
 
 " VCS
-Bundle 'tpope/vim-fugitive'
+Plugin 'tpope/vim-fugitive'
 
 " System
-Bundle 'vim-scripts/Gist.vim'
-Bundle 'majutsushi/tagbar'
-Bundle 'rking/ag.vim'
-Bundle 'tomtom/tcomment_vim'
-Bundle 'tpope/vim-surround'
-Bundle 'scrooloose/syntastic'
-Bundle 'Raimondi/delimitMate'
-Bundle 'luochen1990/rainbow'
-Bundle 'kien/ctrlp.vim'
-Bundle 'mhinz/vim-signify'
-Bundle 'scrooloose/nerdtree'
-Bundle 'jistr/vim-nerdtree-tabs'
+Plugin 'vim-scripts/Gist.vim'
+Plugin 'majutsushi/tagbar'
+Plugin 'rking/ag.vim'
+Plugin 'tomtom/tcomment_vim'
+Plugin 'tpope/vim-surround'
+Plugin 'scrooloose/syntastic'
+Plugin 'Raimondi/delimitMate'
+Plugin 'luochen1990/rainbow'
+Plugin 'kien/ctrlp.vim'
+Plugin 'mhinz/vim-signify'
+Plugin 'scrooloose/nerdtree'
+Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'wincent/command-t'
-Plugin 'marijnh/tern_for_vim'
-Bundle "Shougo/neocomplete.git"
-Bundle "MarcWeber/vim-addon-mw-utils"
-Bundle "tomtom/tlib_vim"
-Bundle "garbas/vim-snipmate"
+Plugin 'Shougo/neocomplete.git'
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+Plugin 'garbas/vim-snipmate'
 Plugin 'kristijanhusak/vim-multiple-cursors'
 Plugin 'scrooloose/nerdcommenter'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'dkprice/vim-easygrep'
+Plugin 'kana/vim-textobj-user'
+Plugin 'bling/vim-airline'
+Plugin 'vim-scripts/gitignore'
+Plugin 'vim-scripts/YankRing.vim'
+
 " Syntaxes
-Bundle 'leshill/vim-json'
-Bundle 'puppetlabs/puppet-syntax-vim'
-Bundle 'jtratner/vim-flavored-markdown'
-Bundle 'othree/html5.vim'
-Bundle 'itspriddle/vim-jquery'
-Bundle 'atourino/jinja.vim'
-Bundle 'saltstack/salt-vim'
-Bundle 'ntpeters/vim-better-whitespace'
-Bundle 'kchmck/vim-coffee-script'
-Bundle 'mtscout6/vim-cjsx'
-Bundle 'pangloss/vim-javascript'
-Bundle "othree/javascript-libraries-syntax.vim"
-Bundle "honza/vim-snippets"
+Plugin 'leshill/vim-json'
+Plugin 'puppetlabs/puppet-syntax-vim'
+Plugin 'othree/html5.vim'
+Plugin 'jtratner/vim-flavored-markdown'
+Plugin 'itspriddle/vim-jquery'
+Plugin 'atourino/jinja.vim'
+Plugin 'saltstack/salt-vim'
+Plugin 'ntpeters/vim-better-whitespace'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'mtscout6/vim-cjsx'
+Plugin 'pangloss/vim-javascript'
+Plugin 'othree/javascript-libraries-syntax.vim'
+Plugin 'honza/vim-snippets'
 
 " Python
-Bundle 'nvie/vim-flake8'
-Bundle 'fs111/pydoc.vim'
+Plugin 'nvie/vim-flake8'
+Plugin 'fs111/pydoc.vim'
 
 " Ruby
-Bundle "vim-ruby/vim-ruby"
-Bundle 'tpope/vim-endwise'
-Bundle "tpope/vim-rails"
-Bundle "tpope/vim-bundler"
+Plugin 'vim-ruby/vim-ruby'
+Plugin 'tpope/vim-endwise'
+Plugin 'tpope/vim-rails'
+Plugin 'nelstrom/vim-textobj-rubyblock'
 
 " Fun, but not useful
-Bundle 'skammer/vim-css-color'
-Bundle 'morhetz/gruvbox'
+Plugin 'skammer/vim-css-color'
+Plugin 'morhetz/gruvbox'
 
 call vundle#end()
 
-" Required after vundle plugin definitions
+" Requiredn after vundle plugin definitions
 filetype plugin indent on
 
 " Change leader
@@ -90,7 +96,9 @@ set wildignore+=*.DS_Store                       " OSX bullshit
 set wildignore+=*.luac                           " Lua byte code
 set wildignore+=*.pyc                            " Python byte code
 set wildignore+=**.class                          " Cursed Java class files
-
+set wildignore+=bower_components
+set wildignore+=node_modules
+set wildignore+=vendor/bundle
 " Ignore in buffer explorer
 let g:netrw_liststyle= 1 " Tree-mode
 let g:netrw_list_hide= '.*\.swp$,.*/$'
@@ -104,7 +112,7 @@ au TabLeave * silent! :wa
 au VimResized * exe "normal! \<c-w>="
 
 " Basics
-syntax enable
+
 set number        " always show line numbers
 set hidden        " Allow un-saved buffers in background
 set clipboard=unnamed " Share system clipboard.
@@ -132,8 +140,13 @@ if has("gui_running")
 endif
 
 " Default background & theme
+syntax enable
+" set background=dark
+" colorscheme gruvbox
 set background=dark
-colorscheme gruvbox
+" let g:solarized_visibility = "high"
+" let g:solarized_contrast = "high"
+colorscheme solarized
 
 " Special characters for hilighting non-priting spaces/tabs/etc.
 set list listchars=tab:»\ ,trail:·
@@ -187,7 +200,7 @@ augroup markdown
 augroup END
 
 " Ruby Configurations
-autocmd filetype ruby setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2 shiftwidth=2 colorcolumn=80
+autocmd filetype ruby setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2 shiftwidth=2
 
 " PHP Configurations
 autocmd FileType php setlocal colorcolumn=100
@@ -244,18 +257,29 @@ let g:tagbar_autofocus = 1
 " crtl-p
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'  " search anything (in files, buffers and MRU files at the same time.)
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard']
+" let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard']
 let g:ctrlp_custom_ignore = '\v\~$|\.(o|swp|pyc|wav|mp3|ogg|blend)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|__init__\.py'
 let g:ctrlp_root_markers = ['.git']
 "let g:ctrlp_working_path_mode = 'ra' " search for nearest ancestor like .git, .hg, and the directory of the current file
-let g:ctrlp_match_window_bottom = 0 " show the match window at the top of the screen
-let g:ctrlp_max_height = 10 " maxiumum height of match window
+let g:ctrlp_match_window_bottom = 1 " show the match window at the top of the screen
+let g:ctrlp_max_height = 40 " maxiumum height of match window
 let g:ctrlp_switch_buffer = 'et' " jump to a file if it's open already
-let g:ctrlp_use_caching = 1 " enable caching
 let g:ctrlp_clear_cache_on_exit=0 " speed up by not removing clearing cache evertime
 let g:ctrlp_show_hidden = 0 " don't show me dotfiles
 let g:ctrlp_mruf_max = 250 " number of recently opened files
-nmap ; :CtrlPBuffer<CR>
+
+" The Silver Searcher
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
+
 
 " Double rainbow - What does it mean!?
 let g:rainbow_active = 1
@@ -310,8 +334,11 @@ inoremap <S-Up> <Esc>:m .-2<CR>==gi
 vnoremap <S-Down> :m '>+1<CR>gv=gv
 vnoremap <S-Up> :m '<-2<CR>gv=gv
 
+map <leader>ca :1,1000 bd<cr>
+nmap <leader>t :CtrlP<CR>
 
 let g:neocomplete#enable_at_startup = 1
+nnoremap F :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
 " Called once right before you start selecting multiple cursors
 function! Multiple_cursors_before()
@@ -326,3 +353,51 @@ function! Multiple_cursors_after()
     exe 'NeoCompleteUnlock'
   endif
 endfunction
+
+" AIRLINE
+let g:airline_theme             = 'solarized'
+let g:airline_enable_branch     = 1
+let g:airline_enable_syntastic  = 1
+
+" vim-powerline symbols
+let g:airline_left_sep          = '⮀'
+let g:airline_left_alt_sep      = '⮁'
+let g:airline_right_sep         = '⮂'
+let g:airline_right_alt_sep     = '⮃'
+let g:airline_branch_prefix     = '⭠'
+let g:airline_readonly_symbol   = '⭤'
+let g:airline_linecolumn_prefix = '⭡'
+
+
+set undofile
+nnoremap <leader><space> :noh<cr>
+set colorcolumn=85
+
+nnoremap <up> <nop>
+nnoremap <down> <nop>
+nnoremap <left> <nop>
+nnoremap <right> <nop>
+inoremap <up> <nop>
+inoremap <down> <nop>
+inoremap <left> <nop>
+inoremap <right> <nop>
+nnoremap j gj
+nnoremap k gk
+
+nnoremap ; :
+nnoremap <leader>s :Ag<Space>
+nnoremap <leader>w <C-w>v<C-w>l
+nnoremap ys :YRShow<CR>
+vnoremap ys <ESC>:YRShow<CR>
+nnoremap <leader>d yyp$
+
+
+
+
+
+
+
+
+
+
+
