@@ -141,11 +141,7 @@ endif
 
 " Default background & theme
 syntax enable
-" set background=dark
-" colorscheme gruvbox
 set background=dark
-" let g:solarized_visibility = "high"
-" let g:solarized_contrast = "high"
 colorscheme solarized
 
 " Special characters for hilighting non-priting spaces/tabs/etc.
@@ -182,7 +178,7 @@ vnoremap / /\v
 
 
 " General auto-commands
-autocmd FileType * setlocal colorcolumn=0
+autocmd FileType * setlocal colorcolumn=85
 " autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
 
 " Get rid of trailing whitespace highlighting in mutt.
@@ -371,7 +367,6 @@ let g:airline_linecolumn_prefix = '⭡'
 
 set undofile
 nnoremap <leader><space> :noh<cr>
-set colorcolumn=85
 
 nnoremap <up> <nop>
 nnoremap <down> <nop>
