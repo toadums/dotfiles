@@ -6,7 +6,7 @@ set rtp+=~/.vim/bundle/vundle
 call vundle#begin()
 
 " let Vundle manage Vundle
-Bundle 'gmarik/vundle'
+Plugin 'gmarik/vundle'
 
 " Vundle help
 """"""""""""""
@@ -20,40 +20,29 @@ Bundle 'gmarik/vundle'
 Plugin 'tpope/vim-fugitive'
 
 " System
-Plugin 'vim-scripts/Gist.vim'
-Plugin 'majutsushi/tagbar'
 Plugin 'rking/ag.vim'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'tpope/vim-surround'
 Plugin 'scrooloose/syntastic'
-Plugin 'Raimondi/delimitMate'
 Plugin 'luochen1990/rainbow'
 Plugin 'kien/ctrlp.vim'
-Plugin 'mhinz/vim-signify'
-Plugin 'scrooloose/nerdtree'
-Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'wincent/command-t'
 Plugin 'Shougo/neocomplete.git'
 Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'tomtom/tlib_vim'
 Plugin 'garbas/vim-snipmate'
 Plugin 'kristijanhusak/vim-multiple-cursors'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'dkprice/vim-easygrep'
-Plugin 'kana/vim-textobj-user'
 Plugin 'bling/vim-airline'
 Plugin 'vim-scripts/gitignore'
 Plugin 'vim-scripts/YankRing.vim'
+Plugin 'ervandew/supertab'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'ajh17/Spacegray.vim'
 
 " Syntaxes
 Plugin 'leshill/vim-json'
-Plugin 'puppetlabs/puppet-syntax-vim'
 Plugin 'othree/html5.vim'
-Plugin 'jtratner/vim-flavored-markdown'
 Plugin 'itspriddle/vim-jquery'
-Plugin 'atourino/jinja.vim'
-Plugin 'saltstack/salt-vim'
 Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'mtscout6/vim-cjsx'
@@ -61,19 +50,13 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'othree/javascript-libraries-syntax.vim'
 Plugin 'honza/vim-snippets'
 
-" Python
-Plugin 'nvie/vim-flake8'
-Plugin 'fs111/pydoc.vim'
-
 " Ruby
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'tpope/vim-endwise'
 Plugin 'tpope/vim-rails'
-Plugin 'nelstrom/vim-textobj-rubyblock'
 
 " Fun, but not useful
 Plugin 'skammer/vim-css-color'
-Plugin 'morhetz/gruvbox'
 
 call vundle#end()
 
@@ -103,6 +86,9 @@ set wildignore+=vendor/bundle
 let g:netrw_liststyle= 1 " Tree-mode
 let g:netrw_list_hide= '.*\.swp$,.*/$'
 
+let g:yankring_replace_n_nkey = "<C-S-P>"
+set autochdir
+
 " Save when losing focus
 set autowriteall " Auto-save files when switching buffers or leaving vim.
 au FocusLost * silent! :wa
@@ -112,7 +98,6 @@ au TabLeave * silent! :wa
 au VimResized * exe "normal! \<c-w>="
 
 " Basics
-
 set number        " always show line numbers
 set hidden        " Allow un-saved buffers in background
 set clipboard=unnamed " Share system clipboard.
@@ -133,6 +118,7 @@ set title                " change the terminal's title
 set visualbell           " don't beep
 set noerrorbells         " don't beep
 set guifont=Inconsolata\ for\ Powerline:h13
+set relativenumber
 
 " Remove the toolbar if we're running under a GUI (e.g. MacVIM).
 if has("gui_running")
@@ -142,7 +128,7 @@ endif
 " Default background & theme
 syntax enable
 set background=dark
-colorscheme solarized
+colorscheme spacegray
 
 " Special characters for hilighting non-priting spaces/tabs/etc.
 set list listchars=tab:»\ ,trail:·
@@ -169,25 +155,8 @@ match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 nnoremap / /\v
 vnoremap / /\v
 
-" Make sure we hilight extra whitespace in the most annoying way possible.
-" highlight ExtraWhitespace ctermbg=red guibg=red
-" match ExtraWhitespace /\s\+$/
-" autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-" autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-" autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-
-
-" General auto-commands
-autocmd FileType * setlocal colorcolumn=85
-" autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
-
-" Get rid of trailing whitespace highlighting in mutt.
-autocmd FileType mail highlight clear ExtraWhitespace
-autocmd FileType mail setlocal listchars=
-
 " Toggle spellcheck in normal mode
 :map <F5> :setlocal spell! spelllang=en_us<CR>
-
 
 " Markdown configurations
 augroup markdown
@@ -198,18 +167,8 @@ augroup END
 " Ruby Configurations
 autocmd filetype ruby setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2 shiftwidth=2
 
-" PHP Configurations
-autocmd FileType php setlocal colorcolumn=100
-
 " HTML configurations
 autocmd FileType html setlocal shiftwidth=2 tabstop=2 softtabstop=2 expandtab
-
-" Python configurations
-autocmd FileType python setlocal shiftwidth=4 expandtab tabstop=4 softtabstop=4
-autocmd FileType python setlocal colorcolumn=80
-autocmd FileType python map <buffer> <F4> :call Flake8()<CR>
-autocmd FileType python autocmd BufWritePre * :%s/\s\+$//e
-autocmd FileType python set omnifunc=pythoncomplete#Complete
 
 " Javascript configurations
 au BufNewFile,BufReadPost *.js setlocal shiftwidth=2 expandtab
@@ -217,38 +176,12 @@ au BufNewFile,BufReadPost *.js setlocal shiftwidth=2 expandtab
 " Ensure that JSON files have their filetype properly set.
 au BufRead,BufNewFile *.json set filetype=json
 
-" Puppet configurations
-au FileType puppet setlocal noexpandtab
-
-" Get jinja filetype selection working correctly for *.jinja.html files.
-au BufNewFile,BufReadPost *.jinja* setlocal filetype=htmljinja
-
-" Get rid of search hilighting with ,/
-nnoremap <silent> <leader>/ :nohlsearch<CR>
-
 " Fix those pesky situations where you edit & need sudo to save
 cmap w!! w !sudo tee % >/dev/null
 
 
 " Plugin Configurations
 """""""""""""""""""""""
-
-" Pyflakes
-"autocmd BufWritePost *.py call Flake8()
-let g:flake8_ignore="E128,E501"
-let g:syntastic_python_checker_args='--ignore=E501,E128'
-
-" Gist
-let g:gist_clip_command = 'pbcopy'
-let g:gist_detect_filetype = 2
-let g:gist_show_privates = 1
-let g:gist_post_private = 1
-
-" TagBar
-nnoremap <silent> <F2> :TagbarToggle<CR>
-let g:tagbar_ctags_bin = '/usr/local/bin/ctags'
-let g:tagbar_autoshowtag = 1
-let g:tagbar_autofocus = 1
 
 " crtl-p
 let g:ctrlp_map = '<c-p>'
@@ -276,7 +209,6 @@ if executable('ag')
   let g:ctrlp_use_caching = 0
 endif
 
-
 " Double rainbow - What does it mean!?
 let g:rainbow_active = 1
 
@@ -293,21 +225,52 @@ if !exists('g:airline_symbols')
 	let g:airline_symbols = {}
 endif
 
-" NerdTree
-map <C-\> :NERDTreeToggle<CR>
-let NERDTreeIgnore=['\.pyc$', '\~$']
-let g:nerdtree_tabs_open_on_gui_startup = 0
-let g:nerdtree_tabs_open_on_console_startup = 0
-map <leader>y :CommandTMRU<CR>
+" Called once right before you start selecting multiple cursors
+function! Multiple_cursors_before()
+  if exists(':NeoCompleteLock')==2
+    exe 'NeoCompleteLock'
+  endif
+endfunction
 
+" Called once only when the multiple selection is canceled (default <Esc>)
+function! Multiple_cursors_after()
+  if exists(':NeoCompleteUnlock')==2
+    exe 'NeoCompleteUnlock'
+  endif
+endfunction
+
+" AIRLINE
+let g:airline_theme             = 'base16'
+let g:airline_enable_branch     = 1
+let g:airline_enable_syntastic  = 1
+
+" vim-powerline symbols
+let g:airline_left_sep          = '⮀'
+let g:airline_left_alt_sep      = '⮁'
+let g:airline_right_sep         = '⮂'
+let g:airline_right_alt_sep     = '⮃'
+let g:airline_branch_prefix     = '⭠'
+let g:airline_readonly_symbol   = '⭤'
+let g:airline_linecolumn_prefix = '⭡'
+
+let g:neocomplete#enable_at_startup = 1
+
+" Trim trailing whitespace on save
 autocmd BufWritePre * :%s/\s\+$//e
+
+
+" Plugin Configurations
+"""""""""""""""""""""""
+
 " keybindings for easier switching between splits
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
-nnoremap <S-u> <C-R>
-inoremap <Nul> <C-n>
+
+noremap <C-s> :w<CR>
+vnoremap <C-s> <ESC>:w<CR>
+inoremap <C-s> <ESC>:w<CR>
 
 nnoremap <C-/> <leader>c<space>
 nnoremap J :bp<CR>
@@ -333,39 +296,8 @@ vnoremap <S-Up> :m '<-2<CR>gv=gv
 map <leader>ca :1,1000 bd<cr>
 nmap <leader>t :CtrlP<CR>
 
-let g:neocomplete#enable_at_startup = 1
 nnoremap F :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
-" Called once right before you start selecting multiple cursors
-function! Multiple_cursors_before()
-  if exists(':NeoCompleteLock')==2
-    exe 'NeoCompleteLock'
-  endif
-endfunction
-
-" Called once only when the multiple selection is canceled (default <Esc>)
-function! Multiple_cursors_after()
-  if exists(':NeoCompleteUnlock')==2
-    exe 'NeoCompleteUnlock'
-  endif
-endfunction
-
-" AIRLINE
-let g:airline_theme             = 'solarized'
-let g:airline_enable_branch     = 1
-let g:airline_enable_syntastic  = 1
-
-" vim-powerline symbols
-let g:airline_left_sep          = '⮀'
-let g:airline_left_alt_sep      = '⮁'
-let g:airline_right_sep         = '⮂'
-let g:airline_right_alt_sep     = '⮃'
-let g:airline_branch_prefix     = '⭠'
-let g:airline_readonly_symbol   = '⭤'
-let g:airline_linecolumn_prefix = '⭡'
-
-
-set undofile
 nnoremap <leader><space> :noh<cr>
 
 nnoremap <up> <nop>
@@ -385,5 +317,7 @@ nnoremap <leader>w <C-w>v<C-w>l
 nnoremap ys :YRShow<CR>
 vnoremap ys <ESC>:YRShow<CR>
 nnoremap <leader>d yyp$
+
+
 
 
