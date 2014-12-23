@@ -56,7 +56,7 @@ Plugin 'tpope/vim-endwise'
 Plugin 'tpope/vim-rails'
 
 " Fun, but not useful
-Plugin 'skammer/vim-css-color'
+Plugin 'cakebaker/scss-syntax.vim'
 
 call vundle#end()
 
@@ -143,6 +143,7 @@ set smarttab      " insert tabs on the start of a line according to
                   "    shiftwidth, not tabstop
 set autoindent    " always set autoindenting on
 set copyindent    " copy the previous indentation on autoindenting
+set modifiable
 
 " General Code Folding
 set foldmethod=indent
@@ -218,8 +219,9 @@ let g:syntastic_auto_jump = 0
 let g:syntastic_puppet_lint_disable = 0
 
 " Airline configs
-let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#enabled = 1 " Show or hide buffers at top
 let g:airline_powerline_fonts = 1
+
 
 if !exists('g:airline_symbols')
 	let g:airline_symbols = {}
@@ -273,8 +275,8 @@ vnoremap <C-s> <ESC>:w<CR>
 inoremap <C-s> <ESC>:w<CR>
 
 nnoremap <C-/> <leader>c<space>
-nnoremap J :bp<CR>
-nnoremap K :bn<CR>
+nnoremap <leader>h :bp<CR>
+nnoremap <leader>l :bn<CR>
 
 "make < > shifts keep selection
 vnoremap < <gv
@@ -313,7 +315,7 @@ nnoremap k gk
 
 nnoremap ; :
 nnoremap <leader>s :Ag<Space>
-nnoremap <leader>w <C-w>v<C-w>l
+nnoremap <leader>w <C-w>v<C-w>l :CtrlP<CR>
 nnoremap ys :YRShow<CR>
 vnoremap ys <ESC>:YRShow<CR>
 nnoremap <leader>d yyp$
