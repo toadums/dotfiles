@@ -22,33 +22,27 @@ Plugin 'tpope/vim-fugitive'
 " System
 Plugin 'rking/ag.vim'
 Plugin 'tomtom/tcomment_vim'
+Plugin 'tpope/vim-rbenv'
 Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-bundler'
 Plugin 'scrooloose/syntastic'
 Plugin 'luochen1990/rainbow'
 Plugin 'kien/ctrlp.vim'
-Plugin 'wincent/command-t'
-Plugin 'Shougo/neocomplete.git'
-Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'tomtom/tlib_vim'
-Plugin 'garbas/vim-snipmate'
 Plugin 'kristijanhusak/vim-multiple-cursors'
 Plugin 'bling/vim-airline'
-Plugin 'vim-scripts/gitignore'
 Plugin 'vim-scripts/YankRing.vim'
 Plugin 'ervandew/supertab'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'ajh17/Spacegray.vim'
+Plugin 'chriskempson/vim-tomorrow-theme'
+Plugin 'tpope/vim-dispatch'
 
 " Syntaxes
 Plugin 'leshill/vim-json'
 Plugin 'othree/html5.vim'
 Plugin 'itspriddle/vim-jquery'
-Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'mtscout6/vim-cjsx'
 Plugin 'pangloss/vim-javascript'
 Plugin 'othree/javascript-libraries-syntax.vim'
-Plugin 'honza/vim-snippets'
 
 " Ruby
 Plugin 'vim-ruby/vim-ruby'
@@ -64,8 +58,9 @@ call vundle#end()
 filetype plugin indent on
 
 " Change leader
-let mapleader = ","
-let g:mapleader = ","
+nnoremap <SPACE> <Nop>
+let mapleader = " "
+let g:mapleader = " "
 
 " Wildmenu
 set wildmenu
@@ -85,9 +80,9 @@ set wildignore+=vendor/bundle
 " Ignore in buffer explorer
 let g:netrw_liststyle= 1 " Tree-mode
 let g:netrw_list_hide= '.*\.swp$,.*/$'
+cabbrev E Explore
 
 let g:yankring_replace_n_nkey = "<C-S-P>"
-set autochdir
 
 " Save when losing focus
 set autowriteall " Auto-save files when switching buffers or leaving vim.
@@ -128,7 +123,7 @@ endif
 " Default background & theme
 syntax enable
 set background=dark
-colorscheme spacegray
+colorscheme tomorrow-night
 
 " Special characters for hilighting non-priting spaces/tabs/etc.
 set list listchars=tab:»\ ,trail:·
@@ -180,6 +175,10 @@ au BufRead,BufNewFile *.json set filetype=json
 " Fix those pesky situations where you edit & need sudo to save
 cmap w!! w !sudo tee % >/dev/null
 
+" (Hopefully) removes the delay when hitting esc in insert mode
+set noesckeys
+set ttimeout
+set ttimeoutlen=1
 
 " Plugin Configurations
 """""""""""""""""""""""
@@ -224,7 +223,7 @@ let g:airline_powerline_fonts = 1
 
 
 if !exists('g:airline_symbols')
-	let g:airline_symbols = {}
+  let g:airline_symbols = {}
 endif
 
 " Called once right before you start selecting multiple cursors
@@ -242,7 +241,7 @@ function! Multiple_cursors_after()
 endfunction
 
 " AIRLINE
-let g:airline_theme             = 'base16'
+let g:airline_theme             = 'tomorrow'
 let g:airline_enable_branch     = 1
 let g:airline_enable_syntastic  = 1
 
@@ -260,7 +259,6 @@ let g:neocomplete#enable_at_startup = 1
 " Trim trailing whitespace on save
 autocmd BufWritePre * :%s/\s\+$//e
 
-
 " Plugin Configurations
 """""""""""""""""""""""
 
@@ -275,8 +273,8 @@ vnoremap <C-s> <ESC>:w<CR>
 inoremap <C-s> <ESC>:w<CR>
 
 nnoremap <C-/> <leader>c<space>
-nnoremap <leader>h :bp<CR>
-nnoremap <leader>l :bn<CR>
+nnoremap J :bp<CR>
+nnoremap K :bn<CR>
 
 "make < > shifts keep selection
 vnoremap < <gv
@@ -320,6 +318,8 @@ nnoremap ys :YRShow<CR>
 vnoremap ys <ESC>:YRShow<CR>
 nnoremap <leader>d yyp$
 
-
-
+" nnoremap <leader>r :!bundle exec rspec %:p<CR>
+nnoremap <leader>r :Dispatch bundle exec rspec %<CR>
+nnoremap <leader>gs :Gstatus<CR>
+nnoremap <leader>gd :Gdiff<CR>
 
