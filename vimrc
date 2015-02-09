@@ -10,14 +10,16 @@ Plug 'tpope/vim-fugitive'
 Plug 'rking/ag.vim', {'on': 'Ag'}
 Plug 'tpope/vim-surround'
 Plug 'scrooloose/syntastic'
-Plug 'wincent/command-t', {'on': 'CommandT'}
 Plug 'bling/vim-airline'
 Plug 'ajh17/VimCompletesMe'
-Plug 'tpope/vim-dispatch', {'on': 'Dispatch'}
+Plug 'tpope/vim-dispatch'
 Plug 'kana/vim-textobj-user'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-vinegar'
+Plug 'vim-scripts/YankRing.vim'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'kien/ctrlp.vim'
 
 " Syntaxes
 Plug 'othree/html5.vim'
@@ -51,6 +53,7 @@ let g:mapleader = " "
 " Wildmenu
 set wildmenu
 set wildmode=list:longest
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 set wildignore+=.hg,.git,.svn                    " Version control
 set wildignore+=*.aux,*.out,*.toc                " LaTeX intermediate files
 set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
@@ -129,12 +132,15 @@ if has("autocmd")
   autocmd BufRead,BufNewFile *.arb setfiletype ruby
 endif
 
-let g:CommandTMaxHeight=50
-let g:CommandTMatchWindowAtTop=1
+let g:ctrlp_match_window = 'bottom,max:40'
+let g:ctrlp_mruf_relative = 1
+let g:ctrlp_user_command = 'ag %s -l --hidden -g ""'
 
 set laststatus=2
 let g:syntastic_enable_signs = 1
 let g:syntastic_auto_jump = 0
+let g:syntastic_javascript_checkers = ['jsxhint']
+let g:syntastic_javascript_jsxhint_exec = 'jsx-jshint-wrapper'
 
 " Airline configs
 " let g:airline#extensions#tabline#enabled = 1 " Show or hide buffers at top
@@ -179,15 +185,14 @@ vnoremap < <gv
 vnoremap > >gv
 
 " Leader maps
-nnoremap <leader>t :CommandT<CR>
-nnoremap <leader>f :CommandTBuffer<CR>
+nnoremap <leader>t :CtrlP<CR>
+nnoremap <leader>b :CtrlPBuffer<CR>
+nnoremap <leader>m :CtrlPMRU<CR>
+
 nnoremap <leader><space> :noh<cr>
 nnoremap <leader>s :Ag<Space>
-nnoremap <leader>ra :Dispatch bundle exec rspec --drb %<CR>
-nnoremap <leader>rn :Dispatch bundle exec rspec --drb %:
+nnoremap <leader>ra :Dispatch bundle exec rspec %<CR>
+nnoremap <leader>rn :Dispatch bundle exec rspec %:
 nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gd :Gdiff<CR>
-
-nnoremap gb :ls<CR>:b
-nnoremap gB :ls<CR>:vert sb
 
