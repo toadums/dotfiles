@@ -24,7 +24,7 @@ Plug 'kien/ctrlp.vim'
 " Syntaxes
 Plug 'othree/html5.vim'
 Plug 'kchmck/vim-coffee-script'
-Plug 'mtscout6/vim-cjsx', {'for': ['coffee']}
+Plug 'mtscout6/vim-cjsx'
 Plug 'pangloss/vim-javascript', {'for': ['javascript', 'coffee', 'haml']}
 Plug 'othree/javascript-libraries-syntax.vim', {'for': ['javascript', 'coffee', 'haml']}
 Plug 'cakebaker/scss-syntax.vim', {'for': ['scss', 'sass', 'haml']}
@@ -69,6 +69,7 @@ set wildignore+=vendor/bundle
 set wildignore+=public
 
 " Ignore in buffer explorer
+let g:netrw_altfile = 1
 let g:netrw_liststyle= 1
 cabbrev E Explore
 
@@ -97,7 +98,7 @@ set cc=80
 " Default background & theme
 syntax enable
 set background=dark
-colorscheme tomorrow-night
+colorscheme tomorrow-night-eighties
 
 " Default Tabs & spaces
 set tabstop=2     " a tab is four spaces
@@ -122,6 +123,8 @@ set noesckeys
 set ttimeout
 set ttimeoutlen=1
 
+" Hide scrollbars
+set guioptions=Ace
 
 " Plugin Configurations
 """""""""""""""""""""""
@@ -130,11 +133,12 @@ runtime macros/matchit.vim
 if has("autocmd")
   filetype indent plugin on
   autocmd BufRead,BufNewFile *.arb setfiletype ruby
+  autocmd BufRead,BufNewFile *.txt setlocal spell spelllang=en_us
 endif
 
 let g:ctrlp_match_window = 'bottom,max:40'
 let g:ctrlp_mruf_relative = 1
-let g:ctrlp_user_command = 'ag %s -l --hidden -g ""'
+let g:ctrlp_user_command = 'ag %s -l -g ""'
 
 set laststatus=2
 let g:syntastic_enable_signs = 1
@@ -195,4 +199,5 @@ nnoremap <leader>ra :Dispatch bundle exec rspec %<CR>
 nnoremap <leader>rn :Dispatch bundle exec rspec %:
 nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gd :Gdiff<CR>
+nnoremap <leader>c  :ccl<CR>
 
