@@ -13,7 +13,6 @@ Plug 'scrooloose/syntastic'
 Plug 'bling/vim-airline'
 Plug 'ajh17/VimCompletesMe'
 Plug 'tpope/vim-dispatch'
-Plug 'kana/vim-textobj-user'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-vinegar'
@@ -23,6 +22,7 @@ Plug 'kien/ctrlp.vim'
 
 " Syntaxes
 Plug 'othree/html5.vim'
+Plug 'vim-scripts/HTML-AutoCloseTag'
 Plug 'kchmck/vim-coffee-script'
 Plug 'mtscout6/vim-cjsx'
 Plug 'pangloss/vim-javascript', {'for': ['javascript', 'coffee', 'haml']}
@@ -31,11 +31,8 @@ Plug 'cakebaker/scss-syntax.vim', {'for': ['scss', 'sass', 'haml']}
 
 " Ruby
 Plug 'vim-ruby/vim-ruby', {'for': 'ruby'}
-Plug 'tpope/vim-rbenv', {'for': 'ruby'}
-Plug 'tpope/vim-bundler', {'for': 'ruby'}
 Plug 'tpope/vim-rails', {'for': 'ruby'}
 Plug 'tpope/vim-endwise', {'for': 'ruby'}
-Plug 'nelstrom/vim-textobj-rubyblock', {'for': 'ruby'}
 
 " Themes
 Plug 'chriskempson/vim-tomorrow-theme'
