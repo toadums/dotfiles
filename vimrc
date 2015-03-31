@@ -13,11 +13,9 @@ Plug 'bling/vim-airline'
 Plug 'ajh17/VimCompletesMe'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-unimpaired'
-" Plug 'tpope/vim-vinegar'
 Plug 'vim-scripts/YankRing.vim'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'kien/ctrlp.vim'
-Plug 'jeetsukumaran/vim-filebeagle'
 
 " Syntaxes
 Plug 'othree/html5.vim'
@@ -70,20 +68,21 @@ let g:netrw_liststyle= 1
 au VimResized * exe "normal! \<c-w>="
 
 " Basics
-set number        " always show line numbers
-set hidden        " Allow un-saved buffers in background
-set clipboard=unnamed " Share system clipboard.
-set backspace=indent,eol,start " Make backspace behave normally.
+set number                              " always show line numbers
+set hidden                              " Allow un-saved buffers in background
+set clipboard=unnamed                   " Share system clipboard.
+set backspace=indent,eol,start          " Make backspace behave normally.
 set backupskip=/tmp/*,/private/tmp/*
-set ffs=unix,dos,mac "Default file types
-set nowrap        " don't wrap lines
-set showmatch     " set show matching parenthesis
-set hlsearch      " highlight search terms
-set incsearch     " show search matches as you type
-set history=1000         " remember more commands and search history
-set undolevels=1000      " use many muchos levels of undo
-set visualbell           " don't beep
-set noerrorbells         " don't beep
+set directory=/tmp//                    " swap files
+set ffs=unix,dos,mac                    "Default file types
+set nowrap                              " don't wrap lines
+set showmatch                           " set show matching parenthesis
+set hlsearch                            " highlight search terms
+set incsearch                           " show search matches as you type
+set history=1000                        " remember more commands and search history
+set undolevels=1000                     " use many muchos levels of undo
+set visualbell                          " don't beep
+set noerrorbells                        " don't beep
 set cursorline
 set cc=80
 
@@ -126,6 +125,8 @@ if has("autocmd")
   filetype indent plugin on
   autocmd BufRead,BufNewFile *.arb setfiletype ruby
   autocmd BufRead,BufNewFile *.txt setlocal spell spelllang=en_us
+  autocmd BufNewFile,BufReadPost *.coffee setl foldmethod=indent nofoldenable foldlevel=1
+  autocmd FileType netrw setl bufhidden=wipe
 endif
 
 let g:ctrlp_match_window = 'bottom,max:40'
@@ -180,10 +181,11 @@ nnoremap <leader>b :CtrlPBuffer<CR>
 nnoremap <leader>d :CtrlPMRU<CR>
 
 nnoremap <leader><space> :noh<cr>
-nnoremap <leader>s :Ag<Space>
+nnoremap <leader>s  :Ag<Space>
 nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gd :Gdiff<CR>
 nnoremap <leader>gb :Gblame<CR>
 nnoremap <leader>c  :ccl<CR>
 nnoremap <leader>y  :YRShow<CR>
-nnoremap -          :FileBeagleBufferDir<CR>
+
+nnoremap - :Explore<CR>
