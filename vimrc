@@ -9,13 +9,14 @@ Plug 'tpope/vim-fugitive'
 " System
 Plug 'rking/ag.vim', {'on': 'Ag'}
 Plug 'tpope/vim-surround'
-Plug 'bling/vim-airline'
-Plug 'ajh17/VimCompletesMe'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-unimpaired'
+Plug 'bling/vim-airline'
+Plug 'ajh17/VimCompletesMe'
 Plug 'vim-scripts/YankRing.vim'
-Plug 'terryma/vim-multiple-cursors'
 Plug 'kien/ctrlp.vim'
+Plug 'techlivezheng/vim-plugin-minibufexpl'
+Plug 'jiangmiao/auto-pairs'
 
 " Syntaxes
 Plug 'othree/html5.vim'
@@ -34,8 +35,6 @@ Plug 'tpope/vim-endwise', {'for': 'ruby'}
 " Themes
 Plug 'chriskempson/vim-tomorrow-theme'
 
-let g:filebeagle_suppress_keymaps = 1
-
 call plug#end()
 
 " Change leader
@@ -50,18 +49,9 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 set wildignore+=.hg,.git,.svn                    " Version control
 set wildignore+=*.aux,*.out,*.toc                " LaTeX intermediate files
 set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
-set wildignore+=*.spl                            " compiled spelling word lists
-set wildignore+=*.sw?                            " Vim swap files
-set wildignore+=*.DS_Store                       " OSX bullshit
-set wildignore+=*.luac                           " Lua byte code
-set wildignore+=*.pyc                            " Python byte code
-set wildignore+=**.class                          " Cursed Java class files
-set wildignore+=bower_components
-set wildignore+=node_modules
-set wildignore+=vendor/bundle
-set wildignore+=public
+set wildignore+=*.spl,*.sw?,*.DS_Store,*.luac,*.pyc,**.class
+set wildignore+=bower_components,node_modules,vendor/bundle,public
 
-" Ignore in buffer explorer
 let g:netrw_liststyle= 1
 
 " Resize splits when the window is resized
@@ -74,7 +64,7 @@ set clipboard=unnamed                   " Share system clipboard.
 set backspace=indent,eol,start          " Make backspace behave normally.
 set backupskip=/tmp/*,/private/tmp/*
 set directory=/tmp//                    " swap files
-set ffs=unix,dos,mac                    "Default file types
+set ffs=unix,dos,mac                    " Default file types
 set nowrap                              " don't wrap lines
 set showmatch                           " set show matching parenthesis
 set hlsearch                            " highlight search terms
@@ -126,7 +116,6 @@ if has("autocmd")
   autocmd BufRead,BufNewFile *.arb setfiletype ruby
   autocmd BufRead,BufNewFile *.txt setlocal spell spelllang=en_us
   autocmd BufNewFile,BufReadPost *.coffee setl foldmethod=indent nofoldenable foldlevel=1
-  autocmd FileType netrw setl bufhidden=wipe
 endif
 
 let g:ctrlp_match_window = 'bottom,max:40'
@@ -136,7 +125,6 @@ let g:ctrlp_user_command = 'ag %s -l -g ""'
 set laststatus=2
 
 " Airline configs
-let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#branch#enabled = 1
 let g:airline_powerline_fonts = 1
 
@@ -156,6 +144,9 @@ let g:airline_symbols.branch    = '⭠'
 let g:airline_symbols.linenr    = '⭡'
 let g:airline_symbols.readonly  = '⭤'
 
+let g:miniBufExplVSplit = 40
+let g:miniBufExplUseSingleClick = 1
+
 " Trim trailing whitespace on save
 autocmd BufWritePre * :%s/\s\+$//e
 
@@ -167,17 +158,13 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
-noremap <C-s> :w<CR>
-vnoremap <C-s> <ESC>:w<CR>
-inoremap <C-s> <ESC>:w<CR>
-
 "make < > shifts keep selection
 vnoremap < <gv
 vnoremap > >gv
 
 " Leader maps
 nnoremap <leader>f :CtrlP<CR>
-nnoremap <leader>b :CtrlPBuffer<CR>
+nnoremap <leader>b :MBEToggle<CR>
 nnoremap <leader>d :CtrlPMRU<CR>
 
 nnoremap <leader><space> :noh<cr>
@@ -189,3 +176,4 @@ nnoremap <leader>c  :ccl<CR>
 nnoremap <leader>y  :YRShow<CR>
 
 nnoremap - :Explore<CR>
+
