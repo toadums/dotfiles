@@ -16,16 +16,19 @@ Plug 'ajh17/VimCompletesMe'
 Plug 'vim-scripts/YankRing.vim'
 Plug 'kien/ctrlp.vim'
 Plug 'techlivezheng/vim-plugin-minibufexpl'
-Plug 'jiangmiao/auto-pairs'
+Plug 'MattesGroeger/vim-bookmarks'
+
+" Errorz
+Plug 'scrooloose/syntastic'
 
 " Syntaxes
 Plug 'othree/html5.vim'
 Plug 'vim-scripts/HTML-AutoCloseTag'
 Plug 'kchmck/vim-coffee-script'
-Plug 'mtscout6/vim-cjsx'
 Plug 'pangloss/vim-javascript', {'for': ['javascript', 'coffee', 'haml']}
 Plug 'othree/javascript-libraries-syntax.vim', {'for': ['javascript', 'coffee', 'haml']}
 Plug 'cakebaker/scss-syntax.vim', {'for': ['scss', 'sass', 'haml']}
+Plug 'toadums/vim-cjsx'
 
 " Ruby
 Plug 'vim-ruby/vim-ruby', {'for': 'ruby'}
@@ -111,16 +114,17 @@ set guioptions=Ace
 """""""""""""""""""""""
 
 runtime macros/matchit.vim
-if has("autocmd")
-  filetype indent plugin on
-  autocmd BufRead,BufNewFile *.arb setfiletype ruby
-  autocmd BufRead,BufNewFile *.txt setlocal spell spelllang=en_us
-  autocmd BufNewFile,BufReadPost *.coffee setl foldmethod=indent nofoldenable foldlevel=1
-endif
+filetype indent plugin on
+autocmd BufRead,BufNewFile *.arb setfiletype ruby
+autocmd BufRead,BufNewFile *.txt setlocal spell spelllang=en_us
+autocmd BufNewFile,BufReadPost *.coffee setl foldmethod=indent nofoldenable foldlevel=1
 
 let g:ctrlp_match_window = 'bottom,max:40'
 let g:ctrlp_mruf_relative = 1
 let g:ctrlp_user_command = 'ag %s -l -g ""'
+
+" AG is so fast we dont need caching
+let g:ctrlp_use_caching = 0
 
 set laststatus=2
 
@@ -150,6 +154,16 @@ let g:miniBufExplUseSingleClick = 1
 " Trim trailing whitespace on save
 autocmd BufWritePre * :%s/\s\+$//e
 
+" Syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_filetype_map = { "cjsx.coffee": "" }
+
+let g:bookmark_save_per_working_dir = 1
+let g:bookmark_auto_save = 1
+
 " Plugin Configurations
 """""""""""""""""""""""
 " keybindings for easier switching between splits
@@ -172,8 +186,9 @@ nnoremap <leader>s  :Ag<Space>
 nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gd :Gdiff<CR>
 nnoremap <leader>gb :Gblame<CR>
-nnoremap <leader>c  :ccl<CR>
+nnoremap <leader>c  :ccl<CR>:lclose<CR>
 nnoremap <leader>y  :YRShow<CR>
 
 nnoremap - :Explore<CR>
+inoremap jk <esc>
 
