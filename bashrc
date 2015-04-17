@@ -1,5 +1,6 @@
 export EDITOR=vim
 
+# Gimme all the files
 ulimit -n 10000
 
 if [ -f `brew --prefix`/etc/bash_completion ]; then
