@@ -9,7 +9,6 @@ cd .dotfiles && ./install
 
 ### Other Stuff
 
-[Terminal color theme](https://github.com/chriskempson/tomorrow-theme/tree/master/iTerm2)
-
+[Terminal color theme](https://github.com/chriskempson/tomorrow-theme/tree/master/OS%20X%20Terminal)
 
 Brew, Node, Mongo, Seil
