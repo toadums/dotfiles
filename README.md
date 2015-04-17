@@ -5,7 +5,6 @@ vim and bash
 ```
 git clone https://github.com/toadums/dotfiles.git ~/.dotfiles
 cd .dotfiles && ./install
-
 ```
 
 ### Other Stuff
