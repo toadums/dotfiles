@@ -1,0 +1,20 @@
+[user]
+	email = pademchuk@gmail.com
+	name = toadums
+
+[alias]
+	co = checkout
+  cleanup = !git remote prune origin && git gc && git clean -df && git stash clear
+  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+
+[core]
+	excludesfile = ~/.gitignore
+	editor = vim --noplugin
+
+[push]
+	default = current

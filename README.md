@@ -1,24 +1,16 @@
 # .dotfiles
-Customizes vim and zsh
+vim and bash
 
 ### Install
-`git clone https://github.com/toadums/dotfiles.git ~/.dotfiles`
-
-To set up your .zshrc via zprezto, run:
+```
+git clone https://github.com/toadums/dotfiles.git ~/.dotfiles
+cd .dotfiles && ./install
 
 ```
-setopt EXTENDED_GLOB
-for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
-  ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
-done
-```
 
-Install Vundle
+### Other Stuff
 
-`https://github.com/gmarik/Vundle.vim`
-
-Install CommandT (Vim plugin)
-
-`https://github.com/wincent/Command-T`
+[Terminal color theme](https://github.com/chriskempson/tomorrow-theme/tree/master/iTerm2)
 
 
+Brew, Node, Mongo, Seil
