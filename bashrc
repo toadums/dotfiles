@@ -2,8 +2,6 @@ export EDITOR=vim
 
 ulimit -n 10000
 
-set -o vi
-
 if [ -f `brew --prefix`/etc/bash_completion ]; then
     . `brew --prefix`/etc/bash_completion
 fi
@@ -16,7 +14,7 @@ source ~/.bash_prompt
 
 # ALIASES
 alias ac="cd ~/code/accio"
-alias aw="cd ~/code/games/awful_tower"
+alias aw="cd ~/code/games/awfultower"
 alias code="cd ~/code"
 alias v="mvim"
 
@@ -30,3 +28,5 @@ alias chom="git checkout origin master"
 alias gp="git pull origin $( git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/')"
 alias gl="git log --oneline --decorate"
 alias gt="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+
+
