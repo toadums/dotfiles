@@ -7,9 +7,6 @@ if [ -f `brew --prefix`/etc/bash_completion ]; then
     . `brew --prefix`/etc/bash_completion
 fi
 
-# Set up some environments
-source ~/.nvm/nvm.sh
-
 # Load colors
 source ~/.bash_prompt
 
@@ -29,5 +26,7 @@ alias chom="git checkout origin master"
 alias gp="git pull origin $( git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/')"
 alias gl="git log --oneline --decorate"
 alias gt="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+alias pc="cd ~/code/ruboss/dashcube"
 
+alias ls="ls -F1aG"
 

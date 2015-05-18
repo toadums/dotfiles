@@ -16,6 +16,12 @@ Plug 'vim-scripts/YankRing.vim'
 Plug 'kien/ctrlp.vim'
 Plug 'techlivezheng/vim-plugin-minibufexpl'
 Plug 'MattesGroeger/vim-bookmarks'
+Plug 'ervandew/supertab'
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'tomtom/tlib_vim'
+Plug 'garbas/vim-snipmate'
+Plug 'honza/vim-snippets'
+Plug 'Yggdroot/indentLine'
 
 " Errorz
 Plug 'scrooloose/syntastic'
@@ -163,10 +169,13 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
-let g:syntastic_filetype_map = { "cjsx.coffee": "" }
-
 let g:bookmark_save_per_working_dir = 1
 let g:bookmark_auto_save = 1
+
+let g:syntastic_coffee_checkers = ['coffeelint-cjsx', 'coffeelint']
+let g:syntastic_scss_checkers = ['scss_lint']
+let g:syntastic_scss_scss_lint_args = "-c ~/.scss-lint.yml"
+
 
 " Plugin Configurations
 """""""""""""""""""""""
@@ -194,5 +203,3 @@ nnoremap <leader>c  :ccl<CR>:lclose<CR>
 nnoremap <leader>y  :YRShow<CR>
 
 nnoremap - :Explore<CR>
-inoremap jk <esc>
-
