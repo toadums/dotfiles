@@ -11,17 +11,15 @@ Plug 'rking/ag.vim', {'on': 'Ag'}
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-unimpaired'
-Plug 'bling/vim-airline'
 Plug 'vim-scripts/YankRing.vim'
 Plug 'kien/ctrlp.vim'
 Plug 'techlivezheng/vim-plugin-minibufexpl'
 Plug 'MattesGroeger/vim-bookmarks'
 Plug 'ervandew/supertab'
-Plug 'MarcWeber/vim-addon-mw-utils'
-Plug 'tomtom/tlib_vim'
-Plug 'garbas/vim-snipmate'
-Plug 'honza/vim-snippets'
 Plug 'Yggdroot/indentLine'
+Plug 'itchyny/lightline.vim'
+Plug 'airblade/vim-gitgutter'
+Plug 'matchit.zip'
 
 " Errorz
 Plug 'scrooloose/syntastic'
@@ -42,6 +40,7 @@ Plug 'tpope/vim-endwise', {'for': 'ruby'}
 
 " Themes
 Plug 'chriskempson/vim-tomorrow-theme'
+Plug 'morhetz/gruvbox'
 
 call plug#end()
 
@@ -88,6 +87,7 @@ set cc=80
 syntax enable
 set background=dark
 colorscheme tomorrow-night-eighties
+" colorscheme gruvbox
 
 " Default Tabs & spaces
 set tabstop=2     " a tab is four spaces
@@ -133,31 +133,6 @@ let g:ctrlp_use_caching = 0
 
 set laststatus=2
 
-" Airline configs
-let g:airline#extensions#branch#enabled = 1
-let g:airline_powerline_fonts = 1
-
-if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
-endif
-
-" AIRLINE
-let g:airline_theme             = 'tomorrow'
-
-
-let g:airline_left_sep = '»'
-let g:airline_left_sep = '▶'
-let g:airline_right_sep = '«'
-let g:airline_right_sep = '◀'
-let g:airline_symbols.linenr = '␊'
-let g:airline_symbols.linenr = '␤'
-let g:airline_symbols.linenr = '¶'
-let g:airline_symbols.branch = '⎇'
-let g:airline_symbols.paste = 'ρ'
-let g:airline_symbols.paste = 'Þ'
-let g:airline_symbols.paste = '∥'
-let g:airline_symbols.whitespace = 'Ξ'
-
 let g:miniBufExplVSplit = 40
 let g:miniBufExplUseSingleClick = 1
 
@@ -175,7 +150,6 @@ let g:bookmark_auto_save = 1
 let g:syntastic_coffee_checkers = ['coffeelint-cjsx', 'coffeelint']
 let g:syntastic_scss_checkers = ['scss_lint']
 let g:syntastic_scss_scss_lint_args = "-c ~/.scss-lint.yml"
-
 
 " Plugin Configurations
 """""""""""""""""""""""
@@ -203,3 +177,8 @@ nnoremap <leader>c  :ccl<CR>:lclose<CR>
 nnoremap <leader>y  :YRShow<CR>
 
 nnoremap - :Explore<CR>
+
+nnoremap <leader>j  :w<CR>
+
+" import extra files
+source ~/.dotfiles/vim/lightline_config.vim
