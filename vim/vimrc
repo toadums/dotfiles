@@ -86,8 +86,13 @@ set cc=80
 " Default background & theme
 syntax enable
 set background=dark
-colorscheme tomorrow-night-eighties
-" colorscheme gruvbox
+
+if has("gui_macvim")
+  colorscheme tomorrow-night-eighties
+  colorscheme gruvbox
+else
+  colorscheme gruvbox
+endif
 
 " Default Tabs & spaces
 set tabstop=2     " a tab is four spaces
@@ -151,8 +156,9 @@ let g:syntastic_coffee_checkers = ['coffeelint-cjsx', 'coffeelint']
 let g:syntastic_scss_checkers = ['scss_lint']
 let g:syntastic_scss_scss_lint_args = "-c ~/.scss-lint.yml"
 
-" Plugin Configurations
+" Key Bindings
 """""""""""""""""""""""
+
 " keybindings for easier switching between splits
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
@@ -180,5 +186,7 @@ nnoremap - :Explore<CR>
 
 nnoremap <leader>j  :w<CR>
 
-" import extra files
+" import extra config
+"""""""""""""""""""""""
+
 source ~/.dotfiles/vim/lightline_config.vim
