@@ -30,3 +30,4 @@ alias pc="cd ~/code/ruboss/dashcube"
 
 alias ls="ls -F1aG"
 alias vi="vim"
+

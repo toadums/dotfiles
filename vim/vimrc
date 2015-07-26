@@ -10,16 +10,19 @@ Plug 'tpope/vim-fugitive'
 Plug 'rking/ag.vim', {'on': 'Ag'}
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-unimpaired'
 Plug 'vim-scripts/YankRing.vim'
 Plug 'kien/ctrlp.vim'
-Plug 'techlivezheng/vim-plugin-minibufexpl'
+" Plug 'techlivezheng/vim-plugin-minibufexpl'
 Plug 'ervandew/supertab'
-Plug 'itchyny/lightline.vim'
+" Plug 'itchyny/lightline.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'matchit.zip'
 Plug 'scrooloose/nerdtree'
+Plug 'bling/vim-airline'
+
 
 " Errorz
 Plug 'scrooloose/syntastic'
@@ -150,6 +153,57 @@ let g:syntastic_coffee_checkers = ['coffeelint-cjsx', 'coffeelint']
 let g:syntastic_scss_checkers = ['scss_lint']
 let g:syntastic_scss_scss_lint_args = "-c ~/.scss-lint.yml"
 
+""""""""""""""""""""""""""""""
+" airline
+""""""""""""""""""""""""""""""
+let g:airline_theme             = 'tomorrow'
+let g:airline#enable#branch     = 1
+let g:airline#enable#syntastic  = 1
+let g:airline#extensions#tabline#enabled = 1
+
+" vim-powerline symbols
+let g:airline_left_sep          = '⮀'
+let g:airline_left_alt_sep      = '⮁'
+let g:airline_right_sep         = '⮂'
+let g:airline_right_alt_sep     = '⮃'
+let g:airline#branch#prefix     = '⭠'
+let g:airline#readonly#symbol   = '⭤'
+let g:airline#linecolumn#prefix = '⭡'
+
+let g:airline#extensions#tabline#left_sep = '⮀'
+let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:airline#extensions#tabline#buffer_min_count = 2
+
+let g:foo = ""
+
+python import vim
+python from Foundation import *
+python from ScriptingBridge import *
+python from multiprocessing import Process
+
+function GetCurrentTrack()
+
+if strftime("%S") % 10
+  return g:foo
+endif
+pyfile ~/itunes.py
+return g:foo
+
+endfunction
+
+function! AirlineInit()
+    let g:airline_section_a = airline#section#create(['mode'])
+    let g:airline_section_b = airline#section#create_left(['branch'])
+    let g:airline_section_c = airline#section#create(['%f'])
+    let g:airline_section_x = airline#section#create([])
+    let g:airline_section_y = airline#section#create(['filetype'])
+    let g:airline_section_z = airline#section#create(['♫', '%{GetCurrentTrack()}'])
+endfunction
+autocmd VimEnter * call AirlineInit()
+
+" NERDTree
+" autocmd vimenter * NERDTree
+
 " Key Bindings
 """""""""""""""""""""""
 
@@ -187,3 +241,4 @@ nnoremap <leader>j  :w<CR>
 """""""""""""""""""""""
 
 source ~/.dotfiles/vim/lightline_config.vim
+
