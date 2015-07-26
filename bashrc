@@ -29,4 +29,4 @@ alias gt="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %
 alias pc="cd ~/code/ruboss/dashcube"
 
 alias ls="ls -F1aG"
-
+alias vi="vim"
