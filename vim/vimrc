@@ -10,19 +10,14 @@ Plug 'tpope/vim-fugitive'
 Plug 'rking/ag.vim', {'on': 'Ag'}
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-unimpaired'
 Plug 'vim-scripts/YankRing.vim'
-Plug 'kien/ctrlp.vim'
-" Plug 'techlivezheng/vim-plugin-minibufexpl'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'techlivezheng/vim-plugin-minibufexpl'
 Plug 'ervandew/supertab'
-" Plug 'itchyny/lightline.vim'
-Plug 'airblade/vim-gitgutter'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'matchit.zip'
-Plug 'scrooloose/nerdtree'
 Plug 'bling/vim-airline'
-
 
 " Errorz
 Plug 'scrooloose/syntastic'
@@ -84,17 +79,13 @@ set undolevels=1000                     " use many muchos levels of undo
 set visualbell                          " don't beep
 set noerrorbells                        " don't beep
 set cursorline
-set cc=80
+set cc=120
 
 " Default background & theme
 syntax enable
 set background=dark
 
-if has("gui_macvim")
-  colorscheme tomorrow-night-eighties
-else
-  colorscheme gruvbox
-endif
+colorscheme tomorrow-night-eighties
 
 " Default Tabs & spaces
 set tabstop=2     " a tab is two spaces
@@ -143,6 +134,7 @@ let g:miniBufExplUseSingleClick = 1
 
 " Trim trailing whitespace on save
 autocmd BufWritePre * :%s/\s\+$//e
+let g:miniBufExplVSplit = 40
 
 " Syntastic
 set statusline+=%#warningmsg#
@@ -159,7 +151,6 @@ let g:syntastic_scss_scss_lint_args = "-c ~/.scss-lint.yml"
 let g:airline_theme             = 'tomorrow'
 let g:airline#enable#branch     = 1
 let g:airline#enable#syntastic  = 1
-let g:airline#extensions#tabline#enabled = 1
 
 " vim-powerline symbols
 let g:airline_left_sep          = '⮀'
@@ -170,39 +161,17 @@ let g:airline#branch#prefix     = '⭠'
 let g:airline#readonly#symbol   = '⭤'
 let g:airline#linecolumn#prefix = '⭡'
 
-let g:airline#extensions#tabline#left_sep = '⮀'
-let g:airline#extensions#tabline#buffer_nr_show = 1
-let g:airline#extensions#tabline#buffer_min_count = 2
-
-let g:foo = ""
-
-python import vim
-python from Foundation import *
-python from ScriptingBridge import *
-python from multiprocessing import Process
-
-function GetCurrentTrack()
-
-if strftime("%S") % 10
-  return g:foo
-endif
-pyfile ~/itunes.py
-return g:foo
-
-endfunction
-
 function! AirlineInit()
     let g:airline_section_a = airline#section#create(['mode'])
     let g:airline_section_b = airline#section#create_left(['branch'])
     let g:airline_section_c = airline#section#create(['%f'])
     let g:airline_section_x = airline#section#create([])
     let g:airline_section_y = airline#section#create(['filetype'])
-    let g:airline_section_z = airline#section#create(['♫', '%{GetCurrentTrack()}'])
+    let g:airline_section_z = airline#section#create(['^_^'])
 endfunction
 autocmd VimEnter * call AirlineInit()
 
-" NERDTree
-" autocmd vimenter * NERDTree
+let g:ag_highlight=1
 
 " Key Bindings
 """""""""""""""""""""""
@@ -219,11 +188,10 @@ vnoremap > >gv
 
 " Leader maps
 nnoremap <leader>f :CtrlP<CR>
-nnoremap <leader>b :MBEToggle<CR>
 nnoremap <leader>d :CtrlPBuffer<CR>
 
-nnoremap <leader>a :noh<cr>
-nnoremap <leader>s  :Ag<Space>
+nnoremap <leader><space> :noh<cr>
+nnoremap <leader>s  :Ag!<Space>
 nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gd :Gdiff<CR>
 nnoremap <leader>gb :Gblame<CR>
@@ -232,13 +200,6 @@ nnoremap <leader>y  :YRShow<CR>
 
 nnoremap - :Explore<CR>
 
-nnoremap <leader>K    :NERDTreeFind<CR>
-nnoremap <leader>k    :NERDTreeToggle<CR>
-
 nnoremap <leader>j  :w<CR>
-
-" import extra config
-"""""""""""""""""""""""
-
-source ~/.dotfiles/vim/lightline_config.vim
+nnoremap <leader>b  :MBEToggle<CR>
 
