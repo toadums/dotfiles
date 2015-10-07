@@ -11,13 +11,18 @@ Plug 'rking/ag.vim', {'on': 'Ag'}
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-unimpaired'
-Plug 'vim-scripts/YankRing.vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'techlivezheng/vim-plugin-minibufexpl'
 Plug 'ervandew/supertab'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'matchit.zip'
 Plug 'bling/vim-airline'
+Plug 'Yggdroot/indentLine'
+
+" Plain Text
+Plug 'reedes/vim-pencil'
+Plug 'junegunn/goyo.vim'
+Plug 'amix/vim-zenroom2'
 
 " Errorz
 Plug 'scrooloose/syntastic'
@@ -25,10 +30,13 @@ Plug 'scrooloose/syntastic'
 " Syntaxes
 Plug 'othree/html5.vim'
 Plug 'vim-scripts/HTML-AutoCloseTag'
-Plug 'toadums/vim-cjsx'
 Plug 'kchmck/vim-coffee-script'
+Plug 'toadums/vim-cjsx'
 Plug 'pangloss/vim-javascript', {'for': ['javascript', 'haml']}
+Plug 'mxw/vim-jsx', {'for': ['javascript']}
 Plug 'cakebaker/scss-syntax.vim', {'for': ['scss', 'sass', 'haml']}
+
+Plug 'digitaltoad/vim-jade'
 
 " Ruby
 Plug 'vim-ruby/vim-ruby', {'for': 'ruby'}
@@ -39,6 +47,7 @@ Plug 'tpope/vim-endwise', {'for': 'ruby'}
 Plug 'altercation/vim-colors-solarized'
 Plug 'chriskempson/vim-tomorrow-theme'
 Plug 'morhetz/gruvbox'
+Plug 'nanotech/jellybeans.vim'
 
 call plug#end()
 
@@ -85,7 +94,7 @@ set cc=120
 syntax enable
 set background=dark
 
-colorscheme tomorrow-night-eighties
+colorscheme solarized
 
 " Default Tabs & spaces
 set tabstop=2     " a tab is two spaces
@@ -117,8 +126,12 @@ set guioptions=Ace
 """""""""""""""""""""""
 runtime macros/matchit.vim
 filetype indent plugin on
-autocmd BufRead,BufNewFile *.txt setlocal spell spelllang=en_us
 autocmd BufNewFile,BufReadPost *.coffee setl foldmethod=indent nofoldenable foldlevel=1
+autocmd FileType text call pencil#init({'wrap': 'soft'})
+
+if has('autocmd')
+  " au BufRead,BufNewFile *.txt setlocal spell spelllang=en_us
+endif
 
 let g:ctrlp_match_window = 'bottom,max:40'
 let g:ctrlp_mruf_relative = 1
@@ -141,9 +154,14 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
+let g:syntastic_mode_map = { 'mode': 'active','passive_filetypes': ['javascript', 'ruby'] }
+
+let g:syntastic_ruby_checkers = ['rubocop']
 let g:syntastic_coffee_checkers = ['coffeelint-cjsx', 'coffeelint']
 let g:syntastic_scss_checkers = ['scss_lint']
 let g:syntastic_scss_scss_lint_args = "-c ~/.scss-lint.yml"
+let g:syntastic_javascript_checkers = ['eslint']
+
 
 """"""""""""""""""""""""""""""
 " airline
@@ -171,7 +189,13 @@ function! AirlineInit()
 endfunction
 autocmd VimEnter * call AirlineInit()
 
+" Auto highlight search result matches
 let g:ag_highlight=1
+
+" IndentLines
+let g:indentLine_enabled = 0
+
+let g:jsx_ext_required = 0
 
 " Key Bindings
 """""""""""""""""""""""
@@ -199,7 +223,11 @@ nnoremap <leader>c  :ccl<CR>:lclose<CR>
 nnoremap <leader>y  :YRShow<CR>
 
 nnoremap - :Explore<CR>
+nnoremap <leader>i :IndentLinesToggle<CR>
 
 nnoremap <leader>j  :w<CR>
+nnoremap <leader>k  :SyntasticCheck<CR>
 nnoremap <leader>b  :MBEToggle<CR>
+
+nnoremap <silent> <leader>z :Goyo<cr>
 

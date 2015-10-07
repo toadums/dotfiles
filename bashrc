@@ -30,4 +30,20 @@ alias pc="cd ~/code/ruboss/dashcube"
 
 alias ls="ls -F1aG"
 alias vi="vim"
+alias aw="cd ~/code/awfultower"
 
+alias b="bundle exec"
+
+alias tu="cd ~/code/turnip"
+alias tus="cd ~/code/turnip/turnip-server"
+alias tui="cd ~/code/turnip/iOs"
+
+alias emacs="open -a Emacs ."
+
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+export NVM_DIR="/Users/diddy/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+eval "$(rbenv init -)"
