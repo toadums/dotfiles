@@ -11,7 +11,9 @@ fi
 source ~/.bash_prompt
 
 # ALIASES
-alias ac="cd ~/code/accio"
+alias ac="cd ~/code/accio/web"
+alias ai="cd ~/code/accio/rn"
+alias al="cd ~/code/accio/lib"
 alias aw="cd ~/code/games/awfultower"
 alias code="cd ~/code"
 alias v="mvim"
