@@ -30,8 +30,8 @@ Plug 'toadums/vim-cjsx', {'for': ['coffee']}
 Plug 'pangloss/vim-javascript', {'for': ['javascript', 'haml']}
 Plug 'mxw/vim-jsx', {'for': ['javascript']}
 Plug 'cakebaker/scss-syntax.vim', {'for': ['scss', 'sass', 'haml']}
-
-Plug 'digitaltoad/vim-jade'
+Plug 'elixir-lang/vim-elixir'
+Plug 'digitaltoad/vim-jade', {'for': ['jade']}
 
 " Ruby
 Plug 'vim-ruby/vim-ruby', {'for': 'ruby'}
@@ -90,8 +90,8 @@ set noerrorbells                        " don't beep
 syntax enable
 set background=dark
 
-" colorscheme jellybeans
-color jellybeans
+" colorscheme
+color gruvbox
 
 " Default Tabs & spaces
 set tabstop=2     " a tab is two spaces
@@ -134,6 +134,7 @@ let g:ctrlp_use_caching = 0
 " Trim trailing whitespace on save
 autocmd BufWritePre * :%s/\s\+$//e
 let g:miniBufExplVSplit = 40
+let g:miniBufExplSortBy = "mru"
 
 autocmd! BufWritePost * Neomake
 let g:neomake_javascript_enabled_makers = ['eslint']
@@ -150,7 +151,7 @@ let g:airline_left_sep          = '⮀'
 let g:airline_left_alt_sep      = '⮁'
 let g:airline_right_sep         = '⮂'
 let g:airline_right_alt_sep     = '⮃'
-let g:airline#branch#prefix     = '⭠'
+let g:airline_branch_prefix     = '⭠'
 let g:airline#readonly#symbol   = '⭤'
 let g:airline#linecolumn#prefix = '⭡'
 
@@ -189,7 +190,7 @@ vnoremap > >gv
 
 " Leader maps
 nnoremap <leader>f :CtrlP<CR>
-nnoremap <leader>d :CtrlPBuffer<CR>
+nnoremap <leader>d :vsp %:h/
 
 nnoremap <leader><space> :noh<cr>
 nnoremap <leader>s  :Ag!<Space>
@@ -197,14 +198,12 @@ nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gd :Gdiff<CR>
 nnoremap <leader>gb :Gblame<CR>
 nnoremap <leader>c  :ccl<CR>:lclose<CR>
-nnoremap <leader>y  :YRShow<CR>
 
 nnoremap - :Explore<CR>
-nnoremap <leader>i :IndentLinesToggle<CR>
 
 nnoremap <leader>j  :w<CR>
-nnoremap <leader>k  :SyntasticCheck<CR>
 nnoremap <leader>b  :MBEToggle<CR>
+nnoremap <leader>k  :MBEFocus<CR>
 
 nnoremap <silent> <leader>z :Goyo<cr>
 
