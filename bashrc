@@ -52,3 +52,5 @@ eval "$(rbenv init -)"
 
 HISTSIZE=10000
 HISTFILESIZE=-1
+
+source ~/venv/bin/activate

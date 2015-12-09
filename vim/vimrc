@@ -1,6 +1,3 @@
-set encoding=utf-8
-set nocompatible
-
 call plug#begin('~/.vim/plugged')
 
 " VCS
@@ -16,6 +13,7 @@ Plug 'ervandew/supertab'
 Plug 'techlivezheng/vim-plugin-minibufexpl'
 Plug 'bling/vim-airline'
 Plug 'benekastah/neomake'
+Plug 'sickill/vim-pasta'
 
 " Plain Text
 Plug 'reedes/vim-pencil', {'for': ['text']}
@@ -85,6 +83,8 @@ set history=1000                        " remember more commands and search hist
 set undolevels=1000                     " use many muchos levels of undo
 set visualbell                          " don't beep
 set noerrorbells                        " don't beep
+set cc=100
+set re=1
 
 " Default background & theme
 syntax enable
@@ -170,6 +170,9 @@ let g:ag_highlight=1
 
 let g:jsx_ext_required = 0
 
+" vim pasta
+let g:pasta_disabled_filetypes = ['python', 'coffee', 'yaml']
+
 " Gross hack to make c-h work to move left a split
 if has('nvim')
   nmap <bs> <c-w>h
@@ -206,4 +209,6 @@ nnoremap <leader>b  :MBEToggle<CR>
 nnoremap <leader>k  :MBEFocus<CR>
 
 nnoremap <silent> <leader>z :Goyo<cr>
+
+nnoremap \ :Ag<SPACE>
 
