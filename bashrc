@@ -40,6 +40,8 @@ alias tu="cd ~/code/turnip"
 alias tus="cd ~/code/turnip/turnip-server"
 alias tui="cd ~/code/turnip/iOs"
 
+alias cw="cd ~/code/craftt/web"
+
 alias emacs="open -a Emacs ."
 
 
@@ -54,3 +56,5 @@ HISTSIZE=10000
 HISTFILESIZE=-1
 
 source ~/venv/bin/activate
+
+export ANDROID_HOME=/usr/local/opt/android-sdk

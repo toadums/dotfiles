@@ -14,6 +14,8 @@ Plug 'techlivezheng/vim-plugin-minibufexpl'
 Plug 'bling/vim-airline'
 Plug 'benekastah/neomake'
 Plug 'sickill/vim-pasta'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'Shougo/deoplete.nvim'
 
 " Plain Text
 Plug 'reedes/vim-pencil', {'for': ['text']}
@@ -22,13 +24,12 @@ Plug 'amix/vim-zenroom2', {'for': ['text']}
 
 " Syntaxes
 Plug 'othree/html5.vim', {'for': ['html']}
-Plug 'vim-scripts/HTML-AutoCloseTag', {'for': ['html']}
+Plug 'vim-scripts/HTML-AutoCloseTag', {'for': ['html', 'jsx']}
 Plug 'kchmck/vim-coffee-script', {'for': ['coffee']}
 Plug 'toadums/vim-cjsx', {'for': ['coffee']}
 Plug 'pangloss/vim-javascript', {'for': ['javascript', 'haml']}
 Plug 'mxw/vim-jsx', {'for': ['javascript']}
 Plug 'cakebaker/scss-syntax.vim', {'for': ['scss', 'sass', 'haml']}
-Plug 'elixir-lang/vim-elixir'
 Plug 'digitaltoad/vim-jade', {'for': ['jade']}
 
 " Ruby
@@ -37,11 +38,9 @@ Plug 'tpope/vim-rails', {'for': 'ruby'}
 Plug 'tpope/vim-endwise', {'for': 'ruby'}
 
 " Themes
-Plug 'zenorocha/dracula-theme', {'rtp': 'vim/'}
 Plug 'altercation/vim-colors-solarized'
 Plug 'chriskempson/vim-tomorrow-theme'
 Plug 'morhetz/gruvbox'
-Plug 'nanotech/jellybeans.vim'
 
 call plug#end()
 
@@ -59,6 +58,7 @@ set wildignore+=*.aux,*.out,*.toc                " LaTeX intermediate files
 set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
 set wildignore+=*.spl,*.sw?,*.DS_Store,*.luac,*.pyc,**.class
 set wildignore+=bower_components,node_modules,vendor/bundle,public
+set wildcharm=<Tab>
 
 let g:netrw_liststyle= 1
 
@@ -73,7 +73,7 @@ set clipboard=unnamed                   " Share system clipboard.
 set backspace=indent,eol,start          " Make backspace behave normally.
 set backupskip=/tmp/*,/private/tmp/*
 set backupdir=/tmp/
-set directory=/tmp//                    " swap files
+set directory=/tmp/                     " swap files
 set ffs=unix,dos,mac                    " Default file types
 set nowrap                              " don't wrap lines
 set showmatch                           " set show matching parenthesis
@@ -89,7 +89,6 @@ set re=1
 " Default background & theme
 syntax enable
 set background=dark
-
 " colorscheme
 color gruvbox
 
@@ -103,6 +102,7 @@ set smarttab      " insert tabs on the start of a line according to
                   "    shiftwidth, not tabstop
 set autoindent    " always set autoindenting on
 set copyindent    " copy the previous indentation on autoindenting
+set cursorline    " highlight current line
 
 " Highlight VCS conflict markers
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
@@ -111,10 +111,10 @@ match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 nnoremap / /\v
 vnoremap / /\v
 
-" (Hopefully) removes the delay when hitting esc in insert mode
-set noesckeys
-set ttimeout
-set ttimeoutlen=1
+" " (Hopefully) removes the delay when hitting esc in insert mode
+" set noesckeys
+" set ttimeout
+" set ttimeoutlen=1
 
 " Hide scrollbars
 set guioptions=Ace
@@ -123,6 +123,7 @@ set guioptions=Ace
 """""""""""""""""""""""
 filetype indent plugin on
 autocmd BufNewFile,BufReadPost *.coffee setl foldmethod=indent nofoldenable foldlevel=1
+au BufNewFile,BufRead *.cjsx set filetype=coffee
 
 let g:ctrlp_match_window = 'bottom,max:40'
 let g:ctrlp_mruf_relative = 1
@@ -142,28 +143,22 @@ let g:neomake_javascript_enabled_makers = ['eslint']
 """"""""""""""""""""""""""""""
 " airline
 """"""""""""""""""""""""""""""
-let g:airline_theme             = 'tomorrow'
-let g:airline#enable#branch     = 1
-let g:airline#enable#syntastic  = 1
+let g:airline_powerline_fonts = 1
+let g:airline_theme = 'gruvbox'
 
-" vim-powerline symbols
-let g:airline_left_sep          = '⮀'
-let g:airline_left_alt_sep      = '⮁'
-let g:airline_right_sep         = '⮂'
-let g:airline_right_alt_sep     = '⮃'
-let g:airline_branch_prefix     = '⭠'
-let g:airline#readonly#symbol   = '⭤'
-let g:airline#linecolumn#prefix = '⭡'
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+
+let g:airline_symbols.space = "\ua0"
+let g:airline#enable#branch = 1
 
 function! AirlineInit()
-    let g:airline_section_a = airline#section#create(['mode'])
-    let g:airline_section_b = airline#section#create_left(['branch'])
-    let g:airline_section_c = airline#section#create(['%f'])
-    let g:airline_section_x = airline#section#create([])
-    let g:airline_section_y = airline#section#create(['filetype'])
-    let g:airline_section_z = airline#section#create(['^_^'])
+  let g:airline_section_x = 0
+  let g:airline_section_y = 0
+  let g:airline_section_z = airline#section#create_left(['filetype'])
 endfunction
-autocmd VimEnter * call AirlineInit()
+autocmd User AirlineAfterInit call AirlineInit()
 
 " Auto highlight search result matches
 let g:ag_highlight=1
@@ -172,6 +167,9 @@ let g:jsx_ext_required = 0
 
 " vim pasta
 let g:pasta_disabled_filetypes = ['python', 'coffee', 'yaml']
+
+" deoplete
+let g:deoplete#enable_at_startup = 1
 
 " Gross hack to make c-h work to move left a split
 if has('nvim')
@@ -193,7 +191,7 @@ vnoremap > >gv
 
 " Leader maps
 nnoremap <leader>f :CtrlP<CR>
-nnoremap <leader>d :vsp %:h/
+nnoremap <leader>d :vsp %:h/<Tab>
 
 nnoremap <leader><space> :noh<cr>
 nnoremap <leader>s  :Ag!<Space>
@@ -208,7 +206,5 @@ nnoremap <leader>j  :w<CR>
 nnoremap <leader>b  :MBEToggle<CR>
 nnoremap <leader>k  :MBEFocus<CR>
 
-nnoremap <silent> <leader>z :Goyo<cr>
-
-nnoremap \ :Ag<SPACE>
+nnoremap \ :Ag!<SPACE>
 
