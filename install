@@ -18,3 +18,4 @@ ln -s ./.dotfiles/bash_profile      ~/.bash_profile
 ln -s ./.dotfiles/gitconfig         ~/.gitconfig
 ln -s ./.dotfiles/agignore          ~/.agignore
 ln -s ./.dotfiles/scss-lint.yml     ~/.scss-lint.yml
+ln -s ./.dotfiles/tmux.conf         ~/.tmux.conf

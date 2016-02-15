@@ -58,3 +58,4 @@ HISTFILESIZE=-1
 source ~/venv/bin/activate
 
 export ANDROID_HOME=/usr/local/opt/android-sdk
+export FZF_DEFAULT_COMMAND='ag -g ""'

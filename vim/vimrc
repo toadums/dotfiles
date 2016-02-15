@@ -8,7 +8,6 @@ Plug 'rking/ag.vim', {'on': 'Ag'}
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-unimpaired'
-Plug 'ctrlpvim/ctrlp.vim'
 Plug 'ervandew/supertab'
 Plug 'techlivezheng/vim-plugin-minibufexpl'
 Plug 'bling/vim-airline'
@@ -16,7 +15,9 @@ Plug 'benekastah/neomake'
 Plug 'sickill/vim-pasta'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'Shougo/deoplete.nvim'
-
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'grassdog/tagman.vim'
+Plug 'tpope/vim-eunuch'
 " Plain Text
 Plug 'reedes/vim-pencil', {'for': ['text']}
 Plug 'junegunn/goyo.vim', {'for': ['text']}
@@ -125,13 +126,6 @@ filetype indent plugin on
 autocmd BufNewFile,BufReadPost *.coffee setl foldmethod=indent nofoldenable foldlevel=1
 au BufNewFile,BufRead *.cjsx set filetype=coffee
 
-let g:ctrlp_match_window = 'bottom,max:40'
-let g:ctrlp_mruf_relative = 1
-let g:ctrlp_user_command = 'ag %s -l -g ""'
-
-" AG is so fast we dont need caching
-let g:ctrlp_use_caching = 0
-
 " Trim trailing whitespace on save
 autocmd BufWritePre * :%s/\s\+$//e
 let g:miniBufExplVSplit = 40
@@ -176,6 +170,15 @@ if has('nvim')
   nmap <bs> <c-w>h
 endif
 
+" Default fzf layout
+" - down / up / left / right
+" - window (nvim only)
+let g:fzf_height = '30%'
+
+let g:tagman_auto_generate = 1
+
+let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+
 " Key Bindings
 """""""""""""""""""""""
 
@@ -190,11 +193,10 @@ vnoremap < <gv
 vnoremap > >gv
 
 " Leader maps
-nnoremap <leader>f :CtrlP<CR>
+nnoremap <leader>f :FZF<CR>
 nnoremap <leader>d :vsp %:h/<Tab>
 
 nnoremap <leader><space> :noh<cr>
-nnoremap <leader>s  :Ag!<Space>
 nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gd :Gdiff<CR>
 nnoremap <leader>gb :Gblame<CR>
@@ -207,4 +209,7 @@ nnoremap <leader>b  :MBEToggle<CR>
 nnoremap <leader>k  :MBEFocus<CR>
 
 nnoremap \ :Ag!<SPACE>
+
+nnoremap <leader>s <C-]>
+nnoremap <leader>S :vsp<CR><C-]>
 
