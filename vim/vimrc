@@ -10,7 +10,7 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-unimpaired'
 Plug 'ervandew/supertab'
 Plug 'techlivezheng/vim-plugin-minibufexpl'
-Plug 'bling/vim-airline'
+Plug 'itchyny/lightline.vim'
 Plug 'benekastah/neomake'
 Plug 'sickill/vim-pasta'
 Plug 'christoomey/vim-tmux-navigator'
@@ -18,6 +18,7 @@ Plug 'Shougo/deoplete.nvim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'grassdog/tagman.vim'
 Plug 'tpope/vim-eunuch'
+
 " Plain Text
 Plug 'reedes/vim-pencil', {'for': ['text']}
 Plug 'junegunn/goyo.vim', {'for': ['text']}
@@ -40,8 +41,7 @@ Plug 'tpope/vim-endwise', {'for': 'ruby'}
 
 " Themes
 Plug 'altercation/vim-colors-solarized'
-Plug 'chriskempson/vim-tomorrow-theme'
-Plug 'morhetz/gruvbox'
+Plug 'w0ng/vim-hybrid'
 
 call plug#end()
 
@@ -91,7 +91,7 @@ set re=1
 syntax enable
 set background=dark
 " colorscheme
-color gruvbox
+color hybrid
 
 " Default Tabs & spaces
 set tabstop=2     " a tab is two spaces
@@ -112,11 +112,6 @@ match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 nnoremap / /\v
 vnoremap / /\v
 
-" " (Hopefully) removes the delay when hitting esc in insert mode
-" set noesckeys
-" set ttimeout
-" set ttimeoutlen=1
-
 " Hide scrollbars
 set guioptions=Ace
 
@@ -134,26 +129,6 @@ let g:miniBufExplSortBy = "mru"
 autocmd! BufWritePost * Neomake
 let g:neomake_javascript_enabled_makers = ['eslint']
 
-""""""""""""""""""""""""""""""
-" airline
-""""""""""""""""""""""""""""""
-let g:airline_powerline_fonts = 1
-let g:airline_theme = 'gruvbox'
-
-if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
-endif
-
-let g:airline_symbols.space = "\ua0"
-let g:airline#enable#branch = 1
-
-function! AirlineInit()
-  let g:airline_section_x = 0
-  let g:airline_section_y = 0
-  let g:airline_section_z = airline#section#create_left(['filetype'])
-endfunction
-autocmd User AirlineAfterInit call AirlineInit()
-
 " Auto highlight search result matches
 let g:ag_highlight=1
 
@@ -169,11 +144,6 @@ let g:deoplete#enable_at_startup = 1
 if has('nvim')
   nmap <bs> <c-w>h
 endif
-
-" Default fzf layout
-" - down / up / left / right
-" - window (nvim only)
-let g:fzf_height = '30%'
 
 let g:tagman_auto_generate = 1
 
@@ -212,4 +182,53 @@ nnoremap \ :Ag!<SPACE>
 
 nnoremap <leader>s <C-]>
 nnoremap <leader>S :vsp<CR><C-]>
+
+" Lightline
+" =========
+let g:lightline = {
+      \ 'colorscheme': 'seoul256',
+      \ 'inactive': {
+      \   'left': [ [ 'filename', 'modified' ] ],
+      \   'right': [ ]
+      \ },
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename', 'modified' ] ],
+      \   'right': [ [ 'filetype' ] ]
+      \ },
+      \ 'component': {
+      \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}'
+      \ },
+      \ 'component_function': {
+      \   'fugitive': 'LightLineFugitive',
+      \   'filename': 'LightLineFilename',
+      \   'mode': 'LightLineMode',
+      \ },
+      \ 'subseparator': { 'left': '|', 'right': '|' }
+      \ }
+
+function! LightLineFilename()
+  let fname = expand('%')
+  return '' != fname ? fname : '[No Name]'
+endfunction
+
+function! LightLineFugitive()
+  try
+    if expand('%:t') !~? 'Tagbar\|Gundo\|NERD' && &ft !~? 'vimfiler' && exists('*fugitive#head')
+      let mark = ''  " edit here for cool mark
+      let _ = fugitive#head()
+      return strlen(_) ? mark._ : ''
+    endif
+  catch
+  endtry
+  return ''
+endfunction
+
+function! LightLineFiletype()
+  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
+endfunction
+
+function! LightLineMode()
+  let fname = expand('%:t')
+  return winwidth(0) > 60 ? lightline#mode() : ''
+endfunction
 
