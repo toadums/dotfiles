@@ -19,3 +19,4 @@ ln -s ./.dotfiles/gitconfig         ~/.gitconfig
 ln -s ./.dotfiles/agignore          ~/.agignore
 ln -s ./.dotfiles/scss-lint.yml     ~/.scss-lint.yml
 ln -s ./.dotfiles/tmux.conf         ~/.tmux.conf
+ln -s ./.dotfiles/slate             ~/.slate

@@ -1,0 +1,52 @@
+# This is the default .slate file.
+# If no ~/.slate file exists this is the file that will be used.
+
+config defaultToCurrentScreen true
+config nudgePercentOf screenSize
+config resizePercentOf screenSize
+config secondsBetweenRepeat 0.1
+config checkDefaultsOnLoad true
+config focusCheckWidthMax 3000
+config windowHintsShowIcons true
+config windowHintsBackgroundColor 96;96;64;0.5
+config windowHintsIgnoreHiddenWindows true
+config windowHintsSpread true
+config windowHintsSpreadPadding 40
+config windowHintsSpreadSearchWidth 80
+config windowHintsSpreadSearchHeight 80
+config switchIconPadding 2
+config switchBackgroundColor 50;53;58;0.7
+config switchSelectedPadding 4
+config switchIconSize 96
+config switchShowTitles true
+config switchFontSize 11
+config switchRoundedCornerSize 4
+config undoOps move,resize
+
+alias hyper ctrl;alt;cmd
+
+# Move abstract commands
+alias full move screenOriginX;screenOriginY screenSizeX;screenSizeY
+alias lefthalf move screenOriginX;screenOriginY screenSizeX/2;screenSizeY
+alias righthalf move screenOriginX+screenSizeX/2;screenOriginY screenSizeX/2;screenSizeY
+
+# Location bindings
+bind h:${hyper} ${lefthalf}
+bind k:${hyper} ${full}
+bind l:${hyper} ${righthalf}
+
+# Undo
+bind z:${hyper} undo
+
+# Throws
+bind i:${hyper} throw 0 resize
+bind n:${hyper} throw 1 resize
+
+# Slate
+bind backslash:${hyper} relaunch
+
+bind i:cmd grid padding:5 0:6,2 1:8,3
+
+# Window Hints
+bind esc:cmd hint
+

@@ -16,7 +16,6 @@ alias ai="cd ~/code/accio/rn"
 alias al="cd ~/code/accio/lib"
 alias aw="cd ~/code/games/awfultower"
 alias code="cd ~/code"
-alias v="mvim"
 
 alias :q="exit"
 
@@ -31,7 +30,7 @@ alias gt="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %
 alias pc="cd ~/code/ruboss/dashcube"
 
 alias ls="ls -F1aG"
-alias vi="vim"
+alias vi="nvim"
 alias aw="cd ~/code/awfultower"
 
 alias b="bundle exec"
