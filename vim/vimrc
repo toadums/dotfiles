@@ -8,16 +8,18 @@ Plug 'rking/ag.vim', {'on': 'Ag'}
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-unimpaired'
-Plug 'ervandew/supertab'
 Plug 'techlivezheng/vim-plugin-minibufexpl'
+Plug 'ervandew/supertab'
 Plug 'itchyny/lightline.vim'
 Plug 'benekastah/neomake'
 Plug 'sickill/vim-pasta'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'Shougo/deoplete.nvim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'grassdog/tagman.vim'
+Plug 'Shougo/deoplete.nvim'
 Plug 'tpope/vim-eunuch'
+Plug 'SirVer/ultisnips'
+Plug 'wellle/targets.vim'
 
 " Plain Text
 Plug 'reedes/vim-pencil', {'for': ['text']}
@@ -139,6 +141,7 @@ let g:pasta_disabled_filetypes = ['python', 'coffee', 'yaml']
 
 " deoplete
 let g:deoplete#enable_at_startup = 1
+let g:deoplete#auto_complete_start_length = 2
 
 " Gross hack to make c-h work to move left a split
 if has('nvim')
@@ -148,6 +151,14 @@ endif
 let g:tagman_auto_generate = 1
 
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+
+" Ultisnips
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+
+let g:python_host_prog = '/venv/myenv/bin/python3'
+
 
 " Key Bindings
 """""""""""""""""""""""

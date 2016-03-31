@@ -17,6 +17,10 @@ alias al="cd ~/code/accio/lib"
 alias aw="cd ~/code/games/awfultower"
 alias code="cd ~/code"
 
+# tmuxp projects
+alias accio="tmuxp load accio.yaml"
+alias craftt="tmuxp load craftt.yaml"
+
 alias :q="exit"
 
 alias gs="git status -s"
@@ -31,18 +35,13 @@ alias pc="cd ~/code/ruboss/dashcube"
 
 alias ls="ls -F1aG"
 alias vi="nvim"
-alias aw="cd ~/code/awfultower"
+alias vim="nvim"
 
 alias b="bundle exec"
 
-alias tu="cd ~/code/turnip"
-alias tus="cd ~/code/turnip/turnip-server"
-alias tui="cd ~/code/turnip/iOs"
-
 alias cw="cd ~/code/craftt/web"
 
-alias emacs="open -a Emacs ."
-
+alias tl="tmux list-sessions"
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
@@ -58,3 +57,6 @@ source ~/venv/bin/activate
 
 export ANDROID_HOME=/usr/local/opt/android-sdk
 export FZF_DEFAULT_COMMAND='ag -g ""'
+
+source tmuxp.bash
+
