@@ -8,18 +8,17 @@ Plug 'rking/ag.vim', {'on': 'Ag'}
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-unimpaired'
-Plug 'techlivezheng/vim-plugin-minibufexpl'
 Plug 'ervandew/supertab'
 Plug 'itchyny/lightline.vim'
 Plug 'benekastah/neomake'
 Plug 'sickill/vim-pasta'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'grassdog/tagman.vim'
 Plug 'Shougo/deoplete.nvim'
 Plug 'tpope/vim-eunuch'
 Plug 'SirVer/ultisnips'
-Plug 'wellle/targets.vim'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'kshenoy/vim-signature'
 
 " Plain Text
 Plug 'reedes/vim-pencil', {'for': ['text']}
@@ -120,13 +119,18 @@ set guioptions=Ace
 " Plugin Configurations
 """""""""""""""""""""""
 filetype indent plugin on
-autocmd BufNewFile,BufReadPost *.coffee setl foldmethod=indent nofoldenable foldlevel=1
 au BufNewFile,BufRead *.cjsx set filetype=coffee
+
+let g:ctrlp_match_window = 'bottom,max:40'
+let g:ctrlp_mruf_relative = 1
+let g:ctrlp_user_command = 'ag %s -l -g ""'
+
+" AG is so fast we dont need caching
+let g:ctrlp_use_caching = 0
+let g:ctrlp_working_path_mode = 0
 
 " Trim trailing whitespace on save
 autocmd BufWritePre * :%s/\s\+$//e
-let g:miniBufExplVSplit = 40
-let g:miniBufExplSortBy = "mru"
 
 autocmd! BufWritePost * Neomake
 let g:neomake_javascript_enabled_makers = ['eslint']
@@ -152,11 +156,6 @@ let g:tagman_auto_generate = 1
 
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
-" Ultisnips
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-
 let g:python_host_prog = '/venv/myenv/bin/python3'
 
 
@@ -174,7 +173,7 @@ vnoremap < <gv
 vnoremap > >gv
 
 " Leader maps
-nnoremap <leader>f :FZF<CR>
+nnoremap <leader>f :CtrlP<CR>
 nnoremap <leader>d :vsp %:h/<Tab>
 
 nnoremap <leader><space> :noh<cr>
@@ -185,14 +184,13 @@ nnoremap <leader>c  :ccl<CR>:lclose<CR>
 
 nnoremap - :Explore<CR>
 
-nnoremap <leader>j  :w<CR>
-nnoremap <leader>b  :MBEToggle<CR>
-nnoremap <leader>k  :MBEFocus<CR>
+nnoremap <leader>s  :w<CR>
+nnoremap <leader>b  :CtrlPBuffer<CR>
 
 nnoremap \ :Ag!<SPACE>
 
-nnoremap <leader>s <C-]>
-nnoremap <leader>S :vsp<CR><C-]>
+" inoremap jk <ESC>
+nnoremap <leader>v :vsp ~/.vimrc<CR>
 
 " Lightline
 " =========
@@ -224,7 +222,7 @@ endfunction
 
 function! LightLineFugitive()
   try
-    if expand('%:t') !~? 'Tagbar\|Gundo\|NERD' && &ft !~? 'vimfiler' && exists('*fugitive#head')
+    if expand('%:t') !~? 'Tagbar\|Gundo' && &ft !~? 'vimfiler' && exists('*fugitive#head')
       let mark = ''  " edit here for cool mark
       let _ = fugitive#head()
       return strlen(_) ? mark._ : ''

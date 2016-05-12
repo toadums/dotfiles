@@ -20,6 +20,10 @@ alias code="cd ~/code"
 # tmuxp projects
 alias accio="tmuxp load accio.yaml"
 alias craftt="tmuxp load craftt.yaml"
+alias oystr="tmuxp load oystr.yaml"
+alias timer="tmuxp load timer.yaml"
+
+alias oy="cd ~/code/oystr/rn"
 
 alias :q="exit"
 
