@@ -16,7 +16,6 @@ Plug 'Shougo/deoplete.nvim', { 'tag': '1.1' }
 Plug 'tpope/vim-eunuch'
 Plug 'SirVer/ultisnips'
 Plug 'Arkham/vim-quickfixdo'
-Plug 'maxbrunsfeld/vim-yankstack'
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -35,6 +34,7 @@ Plug 'pangloss/vim-javascript', {'for': ['javascript']}
 Plug 'mxw/vim-jsx', {'for': ['javascript']}
 Plug 'hail2u/vim-css3-syntax', {'for': ['scss', 'sass', 'haml']}
 Plug 'digitaltoad/vim-jade', {'for': ['jade']}
+Plug 'beyondmarc/hlsl.vim'
 
 " Ruby
 Plug 'vim-ruby/vim-ruby', {'for': 'ruby'}
@@ -62,6 +62,7 @@ set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
 set wildignore+=*.spl,*.sw?,*.DS_Store,*.luac,*.pyc,**.class
 set wildignore+=bower_components,node_modules,vendor/bundle,public
 set wildcharm=<Tab>
+set mouse=
 
 let g:netrw_liststyle= 1
 
@@ -124,6 +125,7 @@ set guioptions=Ace
 """""""""""""""""""""""
 filetype indent plugin on
 au BufNewFile,BufRead *.cjsx set filetype=coffee
+au BufNewFile,BufRead *.frag set filetype=hlsl
 
 let g:fzf_buffers_jump = 1
 
@@ -152,6 +154,9 @@ let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
 let g:python_host_prog = '/venv/myenv/bin/python3'
 
+" Supertab go backwards!
+let g:SuperTabDefaultCompletionType = "<c-n>"
+
 " Key Bindings
 """""""""""""""""""""""
 
@@ -168,6 +173,7 @@ vnoremap > >gv
 " Leader maps
 nnoremap <leader>f :Files <CR>
 nnoremap <leader>d :vsp %:h/<Tab>
+nnoremap <leader>e :e %:h/<Tab>
 
 nnoremap <leader><space> :noh<cr>
 nnoremap <leader>gs :Gstatus<CR>
@@ -182,9 +188,6 @@ nnoremap <leader>b  :Buffers<CR>
 
 nnoremap \ :Ag<Space>
 nnoremap <leader>r :QuickFixDo :%s//gce<left><left><left><left>
-
-nmap <leader>p <Plug>yankstack_substitute_older_paste
-nmap <leader>P <Plug>yankstack_substitute_newer_paste
 
 " inoremap jk <ESC>
 nnoremap <leader>v :vsp ~/.vimrc<CR>
