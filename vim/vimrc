@@ -16,9 +16,7 @@ Plug 'Shougo/deoplete.nvim', { 'tag': '1.1' }
 Plug 'tpope/vim-eunuch'
 Plug 'SirVer/ultisnips'
 Plug 'Arkham/vim-quickfixdo'
-
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 
 "Plain Text
 Plug 'reedes/vim-pencil', {'for': ['text']}
@@ -144,10 +142,14 @@ let g:jsx_ext_required = 0
 let g:pasta_disabled_filetypes = ['python', 'coffee', 'yaml']
 
 " deoplete
-let g:deoplete#enable_at_startup = 1
 " Gross hack to make c-h work to move left a split
 if has('nvim')
+  let g:deoplete#enable_at_startup = 1
   nmap <bs> <c-w>h
+endif
+
+if has('gui_running')
+  set guifont=Source_Code_Pro:h13
 endif
 
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
@@ -156,6 +158,21 @@ let g:python_host_prog = '/venv/myenv/bin/python3'
 
 " Supertab go backwards!
 let g:SuperTabDefaultCompletionType = "<c-n>"
+
+let g:ctrlp_max_height=30
+
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
+
+command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|bot cwindow|redraw!
 
 " Key Bindings
 """""""""""""""""""""""
@@ -171,7 +188,7 @@ vnoremap < <gv
 vnoremap > >gv
 
 " Leader maps
-nnoremap <leader>f :Files <CR>
+nnoremap <leader>f :CtrlP <CR>
 nnoremap <leader>d :vsp %:h/<Tab>
 nnoremap <leader>e :e %:h/<Tab>
 
@@ -189,7 +206,7 @@ nnoremap <leader>b  :Buffers<CR>
 nnoremap \ :Ag<Space>
 nnoremap <leader>r :QuickFixDo :%s//gce<left><left><left><left>
 
-" inoremap jk <ESC>
+inoremap jk <ESC>
 nnoremap <leader>v :vsp ~/.vimrc<CR>
 
 " Lightline
