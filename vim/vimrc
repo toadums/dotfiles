@@ -17,6 +17,11 @@ Plug 'tpope/vim-eunuch'
 Plug 'SirVer/ultisnips'
 Plug 'Arkham/vim-quickfixdo'
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'haya14busa/incsearch.vim'
+Plug 'MartinLafreniere/vim-PairTools'
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'majutsushi/tagbar'
+Plug 'christoomey/vim-sort-motion'
 
 "Plain Text
 Plug 'reedes/vim-pencil', {'for': ['text']}
@@ -112,9 +117,9 @@ set cursorline    " highlight current line
 " Highlight VCS conflict markers
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
-" I CAN HAZ NORMAL REGEXES?
-nnoremap / /\v
-vnoremap / /\v
+" " I CAN HAZ NORMAL REGEXES?
+" nnoremap / /\v
+" vnoremap / /\v
 
 " Hide scrollbars
 set guioptions=Ace
@@ -140,6 +145,10 @@ let g:jsx_ext_required = 0
 
 " vim pasta
 let g:pasta_disabled_filetypes = ['python', 'coffee', 'yaml']
+
+" Snippets
+let g:UltiSnipsEditSplit="vertical"
+let g:UltiSnipsSnippetsDir="~/.vim/snippets/"
 
 " deoplete
 " Gross hack to make c-h work to move left a split
@@ -174,6 +183,13 @@ endif
 
 command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|bot cwindow|redraw!
 
+let g:incsearch#auto_nohlsearch = 1
+
+map / <Plug>(incsearch-forward)
+map g/ <Plug>(incsearch-stay)
+
+let g:gutentags_ctags_executable_ruby = 'jsctags'
+
 " Key Bindings
 """""""""""""""""""""""
 
@@ -197,17 +213,21 @@ nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gd :Gdiff<CR>
 nnoremap <leader>gb :Gblame<CR>
 nnoremap <leader>c  :ccl<CR>:lclose<CR>
+nnoremap <leader>t :execute "vertical ptag " . expand("<cword>")<CR><C-w>=<C-w><C-h>
+
 
 nnoremap - :Explore<CR>
 
 nnoremap <leader>s  :w<CR>
-nnoremap <leader>b  :Buffers<CR>
+nnoremap <leader>b  :CtrlPBuffer<CR>
 
 nnoremap \ :Ag<Space>
 nnoremap <leader>r :QuickFixDo :%s//gce<left><left><left><left>
 
 inoremap jk <ESC>
 nnoremap <leader>v :vsp ~/.vimrc<CR>
+
+nnoremap * *<S-n>
 
 " Lightline
 " =========

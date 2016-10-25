@@ -1,0 +1,94 @@
+snippet log
+	console.log($1)
+snippet i_
+	import _ from 'lodash';
+snippet iconnect
+	import { connect } from 'react-redux';
+snippet ii=
+	import $1 from '$1';
+snippet ii
+	import $1 from '$2';
+snippet iif
+	import { $1 } from '$2';
+# REACT
+# Import only React
+snippet ireact
+	import React from 'react';
+snippet irn
+	import {
+		$1,
+		StyleSheet,
+	} from 'react-native';
+
+# React class
+snippet rcla
+	class ${1:MyComponent} extends Component {
+		render() {
+			return (
+				${0:<div></div>}
+			)
+		}
+	}
+
+# React constructor
+snippet rcon
+	constructor(props) {
+		super(props)
+
+		this.state = {
+			${1}: ${0},
+		}
+	}
+
+# Presentational component
+snippet rcom
+	import React from 'react';
+
+	const $1 = props => {
+		return (
+
+		);
+	};
+
+	$1.propTypes = {
+	};
+
+	export default $1;
+
+# Lifecycle Methods
+snippet rcdm
+	componentDidMount() {
+		${0}
+	}
+
+# State
+snippet rsst
+	this.setState({
+		${1}: ${0},
+	})
+
+snippet rtst
+	this.state.${0}
+
+# Props
+snippet rp
+	props.${0}
+
+snippet rtp
+	this.props.${0}
+snippet rpo
+	React.PropTypes.object,
+snippet rpa
+	React.PropTypes.array,
+snippet rpn
+	React.PropTypes.number,
+snippet rps
+	React.PropTypes.string,
+snippet rpb
+	React.PropTypes.bool,
+snippet rpf
+	React.PropTypes.func,
+snippet raction
+	export const $1 = '$1';
+	export const $1_COMPLETED = '$1_COMPLETED';
+	export const $1_FAILED = '$1_FAILED';
