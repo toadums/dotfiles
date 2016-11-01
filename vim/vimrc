@@ -99,8 +99,8 @@ set background=dark
 " colorscheme
 color hybrid
 
-" set background=light
 " color solarized
+" set background=light
 
 " Default Tabs & spaces
 set tabstop=2     " a tab is two spaces
@@ -231,6 +231,7 @@ nnoremap * *<S-n>
 
 " Lightline
 " =========
+" light theme is solarized
 let g:lightline = {
       \ 'colorscheme': 'seoul256',
       \ 'inactive': {
