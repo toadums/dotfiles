@@ -238,6 +238,7 @@ nnoremap <leader>r :QuickFixDo :%s//gce<left><left><left><left>
 inoremap <expr> <C-j> pumvisible() ? "\<C-N>" : "j"
 inoremap <expr> <C-k> pumvisible() ? "\<C-P>" : "k"
 
+cnoremap jk <ESC>
 inoremap jk <ESC>
 
 " Open vimrc in a split
