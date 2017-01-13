@@ -7,26 +7,23 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-unimpaired'
+Plug 'w0rp/ale'
 Plug 'ervandew/supertab'
-Plug 'itchyny/lightline.vim'
-Plug 'benekastah/neomake'
 Plug 'sickill/vim-pasta'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'Shougo/deoplete.nvim', { 'tag': '1.1' }
+Plug 'Shougo/deoplete.nvim'
 Plug 'tpope/vim-eunuch'
 Plug 'SirVer/ultisnips'
 Plug 'Arkham/vim-quickfixdo'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'haya14busa/incsearch.vim'
-Plug 'MartinLafreniere/vim-PairTools'
 Plug 'ludovicchabant/vim-gutentags'
-Plug 'majutsushi/tagbar'
 Plug 'christoomey/vim-sort-motion'
+Plug 'easymotion/vim-easymotion'
+Plug 'kshenoy/vim-signature'
 
-"Plain Text
-Plug 'reedes/vim-pencil', {'for': ['text']}
-Plug 'junegunn/goyo.vim', {'for': ['text']}
-Plug 'amix/vim-zenroom2', {'for': ['text']}
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 
 "Syntaxes
 Plug 'othree/html5.vim', {'for': ['html']}
@@ -47,6 +44,7 @@ Plug 'tpope/vim-endwise', {'for': 'ruby'}
 " Themes
 Plug 'altercation/vim-colors-solarized'
 Plug 'w0ng/vim-hybrid'
+Plug 'tomasr/molokai'
 
 call plug#end()
 
@@ -63,7 +61,8 @@ set wildignore+=.hg,.git,.svn                    " Version control
 set wildignore+=*.aux,*.out,*.toc                " LaTeX intermediate files
 set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
 set wildignore+=*.spl,*.sw?,*.DS_Store,*.luac,*.pyc,**.class
-set wildignore+=bower_components,node_modules,vendor/bundle,public
+set wildignore+=bower_components,vendor/bundle,public
+set wildignore+=node_modules
 set wildcharm=<Tab>
 set mouse=
 
@@ -97,7 +96,8 @@ set re=1
 syntax enable
 set background=dark
 " colorscheme
-color hybrid
+" color hybrid
+color molokai
 
 " color solarized
 " set background=light
@@ -124,22 +124,31 @@ match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 " Hide scrollbars
 set guioptions=Ace
 
+set statusline=\ %n
+set statusline+=\ %f
+set statusline+=\ %m
+set statusline+=%=
+set statusline+=\ %y
+
 " Plugin Configurations
 """""""""""""""""""""""
 filetype indent plugin on
 au BufNewFile,BufRead *.cjsx set filetype=coffee
 au BufNewFile,BufRead *.frag set filetype=hlsl
 
+map <nop> <Plug>(easymotion-prefix)
+
+let g:rehash256 = 1
+
 let g:fzf_buffers_jump = 1
 
 " Trim trailing whitespace on save
 autocmd BufWritePre * :%s/\s\+$//e
 
-autocmd! BufWritePost * Neomake
-let g:neomake_javascript_enabled_makers = ['eslint']
-
-" Auto highlight search result matches
-let g:ag_highlight=1
+let g:ale_javascript_eslint_use_global = 1
+let g:ale_linters = {
+\   'javascript': ['eslint'],
+\}
 
 let g:jsx_ext_required = 0
 
@@ -151,6 +160,10 @@ let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsSnippetsDir="~/.vim/snippets/"
 
 " deoplete
+let deoplete#tag#cache_limit_size = 5000000
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#sources = {}
+let g:deoplete#sources._ = ['buffer', 'tag', 'file', 'member']
 " Gross hack to make c-h work to move left a split
 if has('nvim')
   let g:deoplete#enable_at_startup = 1
@@ -168,27 +181,15 @@ let g:python_host_prog = '/venv/myenv/bin/python3'
 " Supertab go backwards!
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
-let g:ctrlp_max_height=30
-
-if executable('ag')
-  " Use ag over grep
-  set grepprg=ag\ --nogroup\ --nocolor
-
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-
-  " ag is fast enough that CtrlP doesn't need to cache
-  let g:ctrlp_use_caching = 0
-endif
-
-command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|bot cwindow|redraw!
-
 let g:incsearch#auto_nohlsearch = 1
 
 map / <Plug>(incsearch-forward)
 map g/ <Plug>(incsearch-stay)
 
 let g:gutentags_ctags_executable_ruby = 'jsctags'
+
+" Dont indent chained functions
+let g:javascript_opfirst = 1
 
 " Key Bindings
 """""""""""""""""""""""
@@ -203,79 +204,48 @@ nnoremap <C-H> <C-W><C-H>
 vnoremap < <gv
 vnoremap > >gv
 
-" Leader maps
-nnoremap <leader>f :CtrlP <CR>
+" FZF bindings
+nnoremap \ :Ag<Space>
+nnoremap <leader>b  :Buffers<CR>
+nnoremap <leader>f :Files <CR>
+" Search tags for word under cursor
+nnoremap <leader>t :execute 'Tags ' . expand("<cword>")<CR>
+
+" Open files
 nnoremap <leader>d :vsp %:h/<Tab>
 nnoremap <leader>e :e %:h/<Tab>
 
 nnoremap <leader><space> :noh<cr>
+vnoremap <leader><space> <esc>:noh<cr>
+
+" Git stuff
 nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gd :Gdiff<CR>
 nnoremap <leader>gb :Gblame<CR>
-nnoremap <leader>c  :ccl<CR>:lclose<CR>
-nnoremap <leader>t :execute "vertical ptag " . expand("<cword>")<CR><C-w>=<C-w><C-h>
 
+nnoremap <leader>c  :ccl<CR>:lclose<CR>
 
 nnoremap - :Explore<CR>
 
-nnoremap <leader>s  :w<CR>
-nnoremap <leader>b  :CtrlPBuffer<CR>
+" <Leader>f{char} to move to {char}
+map  <Leader>a <Plug>(easymotion-bd-f)
+nmap <Leader>a <Plug>(easymotion-overwin-f)
 
-nnoremap \ :Ag<Space>
+nnoremap <leader>s  :w<CR>
+
 nnoremap <leader>r :QuickFixDo :%s//gce<left><left><left><left>
 
+inoremap <expr> <C-j> pumvisible() ? "\<C-N>" : "j"
+inoremap <expr> <C-k> pumvisible() ? "\<C-P>" : "k"
+
 inoremap jk <ESC>
+
+" Open vimrc in a split
 nnoremap <leader>v :vsp ~/.vimrc<CR>
 
-nnoremap * *<S-n>
-
-" Lightline
-" =========
-" light theme is solarized
-let g:lightline = {
-      \ 'colorscheme': 'seoul256',
-      \ 'inactive': {
-      \   'left': [ [ 'filename', 'modified' ] ],
-      \   'right': [ ]
-      \ },
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename', 'modified' ] ],
-      \   'right': [ [ 'filetype' ] ]
-      \ },
-      \ 'component': {
-      \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}'
-      \ },
-      \ 'component_function': {
-      \   'fugitive': 'LightLineFugitive',
-      \   'filename': 'LightLineFilename',
-      \   'mode': 'LightLineMode',
-      \ },
-      \ 'subseparator': { 'left': '|', 'right': '|' }
-      \ }
-
-function! LightLineFilename()
-  let fname = expand('%')
-  return '' != fname ? fname : '[No Name]'
-endfunction
-
-function! LightLineFugitive()
-  try
-    if expand('%:t') !~? 'Tagbar\|Gundo' && &ft !~? 'vimfiler' && exists('*fugitive#head')
-      let mark = ''  " edit here for cool mark
-      let _ = fugitive#head()
-      return strlen(_) ? mark._ : ''
-    endif
-  catch
-  endtry
-  return ''
-endfunction
-
-function! LightLineFiletype()
-  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
-endfunction
-
-function! LightLineMode()
-  let fname = expand('%:t')
-  return winwidth(0) > 60 ? lightline#mode() : ''
-endfunction
+" stupid kinesis
+noremap <Up> <NOP>
+noremap <Down> <NOP>
+noremap <Left> <NOP>
+noremap <Right> <NOP>
 

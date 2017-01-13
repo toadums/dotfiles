@@ -1,6 +1,0 @@
-linters:
-  PropertySortOrder:
-    enabled: false
-
-  SelectorFormat:
-    enabled: false

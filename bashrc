@@ -33,6 +33,7 @@ alias ga="git add -ip"
 alias gc="git checkout"
 alias gl="git log --oneline --decorate"
 alias gt="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+alias gn="git rev-list --left-right --count"
 
 alias gpull='git pull --rebase origin `git rev-parse --abbrev-ref HEAD`'
 alias gp='git push origin HEAD'
@@ -56,5 +57,9 @@ HISTFILESIZE=-1
 source ~/venv/bin/activate
 
 export ANDROID_HOME=/usr/local/opt/android-sdk
+
 export FZF_DEFAULT_COMMAND='ag -g ""'
+
+export CODE_TSJS=1
+export PATH="$PATH:$HOME/.yarn/bin"
 
