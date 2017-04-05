@@ -20,16 +20,6 @@ snippet irn
 		StyleSheet,
 	} from 'react-native'
 
-# React class
-snippet rcla
-	class ${1:MyComponent} extends Component {
-		render() {
-			return (
-				${0:<div></div>}
-			)
-		}
-	}
-
 # React constructor
 snippet rcon
 	constructor(props) {
@@ -39,21 +29,6 @@ snippet rcon
 			${1}: ${0},
 		}
 	}
-
-# Presentational component
-snippet rcom
-	import React from 'react'
-
-	const $1 = props => {
-		return (
-
-		)
-	}
-
-	$1.propTypes = {
-	}
-
-	export default $1
 
 # Lifecycle Methods
 snippet rcdm
@@ -94,4 +69,68 @@ snippet raction
 	export const $1_FAILED = '$1_FAILED'
 snippet icompose
 	import { compose, setPropTypes, defaultProps } from 'recompose'
+snippet sc
+	// ----------------------------------------------------------------------------
+	// $1
+	// ----------------------------------------------------------------------------
+snippet relay
+	import React from 'react'
+	import Relay from 'react-relay'
+	import classnames from 'classnames'
+	import { compose } from 'recompose'
 
+	import createContainer from 'app-components/create_container'
+
+	class $1 extends React.Component {
+		static propTypes = {
+			className: React.PropTypes.string,
+			children: React.PropTypes.node
+	  }
+
+		render () {
+			const { className, children } = this.props
+			const cx = classnames('$1', className)
+			return (
+				<div className={cx}>
+				</div>
+			)
+		}
+	}
+
+snippet react
+	import React from 'react'
+	import classnames from 'classnames'
+
+	function $1 ({ className }) {
+		const cx = classnames('$1', className)
+		return (
+			<div className={cx}>
+			</div>
+		)
+	}
+
+	$1.propTypes = {
+		className: React.PropTypes.string
+	}
+
+	export default $1
+
+snippet rc
+	import React from 'react'
+	import classnames from 'classnames'
+
+	class $1 extends React.Component {
+		static propTypes = {
+			className: React.PropTypes.string
+		}
+		render () {
+			const { className } = this.props
+			const cx = classnames('$1', className)
+			return (
+				<div className={cx}>
+				</div>
+			)
+		}
+	}
+
+	export default $1

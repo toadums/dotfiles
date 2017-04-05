@@ -23,6 +23,7 @@ alias oy="cd ~/code/oystr/rn"
 alias cw="cd ~/code/craftt/web"
 alias pc="cd ~/code/ruboss/dashcube"
 alias beerfest="cd ~/code/beerfest"
+alias assembly="cd ~/code/accio/consulting/assembly"
 
 alias :q="exit"
 
@@ -54,12 +55,11 @@ eval "$(rbenv init -)"
 HISTSIZE=10000
 HISTFILESIZE=-1
 
-source ~/venv/bin/activate
-
 export ANDROID_HOME=/usr/local/opt/android-sdk
 
 export FZF_DEFAULT_COMMAND='ag -g ""'
 
 export CODE_TSJS=1
 export PATH="$PATH:$HOME/.yarn/bin"
+export DISPLAY=
 

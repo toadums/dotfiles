@@ -11,7 +11,6 @@ Plug 'w0rp/ale'
 Plug 'ervandew/supertab'
 Plug 'sickill/vim-pasta'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'Shougo/deoplete.nvim'
 Plug 'tpope/vim-eunuch'
 Plug 'SirVer/ultisnips'
 Plug 'Arkham/vim-quickfixdo'
@@ -19,8 +18,9 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'haya14busa/incsearch.vim'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'christoomey/vim-sort-motion'
-Plug 'easymotion/vim-easymotion'
-Plug 'kshenoy/vim-signature'
+" Plug 'roxma/python-support.nvim'
+" Plug 'roxma/nvim-completion-manager'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -64,7 +64,6 @@ set wildignore+=*.spl,*.sw?,*.DS_Store,*.luac,*.pyc,**.class
 set wildignore+=bower_components,vendor/bundle,public
 set wildignore+=node_modules
 set wildcharm=<Tab>
-set mouse=
 
 let g:netrw_liststyle= 1
 
@@ -96,11 +95,11 @@ set re=1
 syntax enable
 set background=dark
 " colorscheme
-" color hybrid
-color molokai
+color hybrid
+" color molokai
 
-" color solarized
 " set background=light
+" color solarized
 
 " Default Tabs & spaces
 set tabstop=2     " a tab is two spaces
@@ -113,13 +112,6 @@ set smarttab      " insert tabs on the start of a line according to
 set autoindent    " always set autoindenting on
 set copyindent    " copy the previous indentation on autoindenting
 set cursorline    " highlight current line
-
-" Highlight VCS conflict markers
-match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
-
-" " I CAN HAZ NORMAL REGEXES?
-" nnoremap / /\v
-" vnoremap / /\v
 
 " Hide scrollbars
 set guioptions=Ace
@@ -135,8 +127,6 @@ set statusline+=\ %y
 filetype indent plugin on
 au BufNewFile,BufRead *.cjsx set filetype=coffee
 au BufNewFile,BufRead *.frag set filetype=hlsl
-
-map <nop> <Plug>(easymotion-prefix)
 
 let g:rehash256 = 1
 
@@ -159,14 +149,10 @@ let g:pasta_disabled_filetypes = ['python', 'coffee', 'yaml']
 let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsSnippetsDir="~/.vim/snippets/"
 
-" deoplete
-let deoplete#tag#cache_limit_size = 5000000
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#sources = {}
-let g:deoplete#sources._ = ['buffer', 'tag', 'file', 'member']
+let g:gutentags_ctags_executable_ruby = 'jsctags'
+
 " Gross hack to make c-h work to move left a split
 if has('nvim')
-  let g:deoplete#enable_at_startup = 1
   nmap <bs> <c-w>h
 endif
 
@@ -176,21 +162,26 @@ endif
 
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
-let g:python_host_prog = '/venv/myenv/bin/python3'
+" let g:python_host_prog = '~/venv/myenv/bin/python3'
 
 " Supertab go backwards!
-let g:SuperTabDefaultCompletionType = "<c-n>"
+" let g:SuperTabDefaultCompletionType = "<c-n>"
 
 let g:incsearch#auto_nohlsearch = 1
 
 map / <Plug>(incsearch-forward)
 map g/ <Plug>(incsearch-stay)
 
-let g:gutentags_ctags_executable_ruby = 'jsctags'
-
 " Dont indent chained functions
 let g:javascript_opfirst = 1
 
+" deoplete
+let g:deoplete#enable_at_startup = 1
+call deoplete#custom#set('ultisnips', 'matchers', ['matcher_fuzzy'])
+let deoplete#tag#cache_limit_size = 5000000
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#sources = {}
+let g:deoplete#sources._ = ['buffer', 'tag', 'file', 'member', 'ultisnips']
 " Key Bindings
 """""""""""""""""""""""
 
@@ -206,6 +197,8 @@ vnoremap > >gv
 
 " FZF bindings
 nnoremap \ :Ag<Space>
+nnoremap <leader>o :execute 'Ag ' . expand("<cword>")<CR>
+
 nnoremap <leader>b  :Buffers<CR>
 nnoremap <leader>f :Files <CR>
 " Search tags for word under cursor
@@ -225,18 +218,11 @@ nnoremap <leader>gb :Gblame<CR>
 
 nnoremap <leader>c  :ccl<CR>:lclose<CR>
 
-nnoremap - :Explore<CR>
-
-" <Leader>f{char} to move to {char}
-map  <Leader>a <Plug>(easymotion-bd-f)
-nmap <Leader>a <Plug>(easymotion-overwin-f)
+nnoremap - :Ex<cr>
 
 nnoremap <leader>s  :w<CR>
 
 nnoremap <leader>r :QuickFixDo :%s//gce<left><left><left><left>
-
-inoremap <expr> <C-j> pumvisible() ? "\<C-N>" : "j"
-inoremap <expr> <C-k> pumvisible() ? "\<C-P>" : "k"
 
 cnoremap jk <ESC>
 inoremap jk <ESC>
