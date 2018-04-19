@@ -8,19 +8,20 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-unimpaired'
 Plug 'w0rp/ale'
+
 Plug 'ervandew/supertab'
 Plug 'sickill/vim-pasta'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-eunuch'
-Plug 'SirVer/ultisnips'
 Plug 'Arkham/vim-quickfixdo'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'haya14busa/incsearch.vim'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'christoomey/vim-sort-motion'
-" Plug 'roxma/python-support.nvim'
-" Plug 'roxma/nvim-completion-manager'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'SirVer/ultisnips'
+Plug 'jiangmiao/auto-pairs'
+Plug 'flazz/vim-colorschemes'
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -45,8 +46,16 @@ Plug 'tpope/vim-endwise', {'for': 'ruby'}
 Plug 'altercation/vim-colors-solarized'
 Plug 'w0ng/vim-hybrid'
 Plug 'tomasr/molokai'
+Plug 'rakr/vim-togglebg'
+Plug 'rakr/vim-two-firewatch'
 
 call plug#end()
+
+set background=light
+colorscheme PaperColor
+
+" set background=dark
+" colorscheme gruvbox
 
 " Change leader
 nnoremap <SPACE> <Nop>
@@ -64,6 +73,7 @@ set wildignore+=*.spl,*.sw?,*.DS_Store,*.luac,*.pyc,**.class
 set wildignore+=bower_components,vendor/bundle,public
 set wildignore+=node_modules
 set wildcharm=<Tab>
+set rtp+=~/.vim
 
 let g:netrw_liststyle= 1
 
@@ -91,16 +101,6 @@ set noerrorbells                        " don't beep
 set cc=100
 set re=1
 
-" Default background & theme
-syntax enable
-set background=dark
-" colorscheme
-color hybrid
-" color molokai
-
-" set background=light
-" color solarized
-
 " Default Tabs & spaces
 set tabstop=2     " a tab is two spaces
 set shiftwidth=2  " number of spaces to use for autoindenting
@@ -124,30 +124,41 @@ set statusline+=\ %y
 
 " Plugin Configurations
 """""""""""""""""""""""
+
+let g:UltiSnipsUsePythonVersion = 2
+let g:UltiSnipsSnippetsDir="~/.vimrc/snippets"
+let g:UltiSnipsEditSplit="vertical"
+
+
 filetype indent plugin on
 au BufNewFile,BufRead *.cjsx set filetype=coffee
 au BufNewFile,BufRead *.frag set filetype=hlsl
+
+au BufNewFile,BufRead * set relativenumber
 
 let g:rehash256 = 1
 
 let g:fzf_buffers_jump = 1
 
+
 " Trim trailing whitespace on save
 autocmd BufWritePre * :%s/\s\+$//e
 
+" format js files
 let g:ale_javascript_eslint_use_global = 1
 let g:ale_linters = {
 \   'javascript': ['eslint'],
 \}
 
+let g:ale_fixers = {}
+let g:ale_fixers.javascript = ['eslint']
+let g:ale_fix_on_save=1
+
+
 let g:jsx_ext_required = 0
 
 " vim pasta
 let g:pasta_disabled_filetypes = ['python', 'coffee', 'yaml']
-
-" Snippets
-let g:UltiSnipsEditSplit="vertical"
-let g:UltiSnipsSnippetsDir="~/.vim/snippets/"
 
 let g:gutentags_ctags_executable_ruby = 'jsctags'
 
@@ -157,15 +168,12 @@ if has('nvim')
 endif
 
 if has('gui_running')
-  set guifont=Source_Code_Pro:h13
+  set guifont=Source_Code_Pro:h14
 endif
 
+call togglebg#map("<F5>")
+
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
-
-" let g:python_host_prog = '~/venv/myenv/bin/python3'
-
-" Supertab go backwards!
-" let g:SuperTabDefaultCompletionType = "<c-n>"
 
 let g:incsearch#auto_nohlsearch = 1
 
@@ -182,14 +190,18 @@ let deoplete#tag#cache_limit_size = 5000000
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#sources = {}
 let g:deoplete#sources._ = ['buffer', 'tag', 'file', 'member', 'ultisnips']
+
+
+let g:UltiSnipsUsePythonVersion = 3
+
 " Key Bindings
 """""""""""""""""""""""
 
-" keybindings for easier switching between splits
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
+" " keybindings for easier switching between splits
+" nnoremap <C-J> <C-W><C-J>
+" nnoremap <C-K> <C-W><C-K>
+" nnoremap <C-L> <C-W><C-L>
+" nnoremap <C-H> <C-W><C-H>
 
 "make < > shifts keep selection
 vnoremap < <gv
@@ -229,6 +241,8 @@ inoremap jk <ESC>
 
 " Open vimrc in a split
 nnoremap <leader>v :vsp ~/.vimrc<CR>
+
+" nnoremap <leader>p :bot 20split | terminal pgcli accio-api<CR>
 
 " stupid kinesis
 noremap <Up> <NOP>
