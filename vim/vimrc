@@ -13,6 +13,7 @@ Plug 'flazz/vim-colorschemes'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'sickill/vim-pasta'
 Plug 'mileszs/ack.vim'
+Plug 'roman/golden-ratio'
 " Plug 'SirVer/ultisnips'
 
 Plug 'Shougo/neosnippet-snippets'
@@ -30,11 +31,15 @@ endif
 " Languages
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
+Plug 'elixir-editors/vim-elixir'
 
 call plug#end()
 
-set background=light
-colorscheme PaperColor
+" set background=light
+" colorscheme PaperColor
+
+set background=dark
+colorscheme molokai
 
 " Change leader
 nnoremap <SPACE> <Nop>
@@ -103,9 +108,11 @@ if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
 
+let g:golden_ratio_exclude_nonmodifiable = 1
+let g:javascript_opfirst = 1
+
 " Key Bindings
 """""""""""""""""""""""
-
 
 "make < > shifts keep selection
 vnoremap < <gv
