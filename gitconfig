@@ -13,8 +13,11 @@
 	branch = auto
 
 [core]
-	excludesfile = ~/.gitignore
 	editor = vim --noplugin
+	excludesfile = /Users/pauldemchuk/.gitignore
 
 [push]
 	default = current
+
+[branch]
+	autosetuprebase = always

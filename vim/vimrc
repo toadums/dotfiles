@@ -7,75 +7,44 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-unimpaired'
-Plug 'w0rp/ale'
-
-Plug 'ervandew/supertab'
-Plug 'sickill/vim-pasta'
-Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-eunuch'
-Plug 'Arkham/vim-quickfixdo'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'haya14busa/incsearch.vim'
-Plug 'ludovicchabant/vim-gutentags'
-Plug 'christoomey/vim-sort-motion'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'SirVer/ultisnips'
-Plug 'jiangmiao/auto-pairs'
+Plug 'christoomey/vim-tmux-navigator'
 Plug 'flazz/vim-colorschemes'
-
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
+Plug 'sickill/vim-pasta'
+Plug 'mileszs/ack.vim'
+Plug 'roman/golden-ratio'
+" Plug 'SirVer/ultisnips'
 
-"Syntaxes
-Plug 'othree/html5.vim', {'for': ['html']}
-Plug 'vim-scripts/HTML-AutoCloseTag', {'for': ['html', 'javascript.jsx']}
-Plug 'kchmck/vim-coffee-script', {'for': ['coffee']}
-Plug 'toadums/vim-cjsx', {'for': ['coffee']}
-Plug 'pangloss/vim-javascript', {'for': ['javascript']}
-Plug 'mxw/vim-jsx', {'for': ['javascript']}
-Plug 'hail2u/vim-css3-syntax', {'for': ['scss', 'sass', 'haml']}
-Plug 'digitaltoad/vim-jade', {'for': ['jade']}
-Plug 'beyondmarc/hlsl.vim'
+Plug 'Shougo/neosnippet-snippets'
+Plug 'Shougo/neosnippet'
 
-" Ruby
-Plug 'vim-ruby/vim-ruby', {'for': 'ruby'}
-Plug 'tpope/vim-rails', {'for': 'ruby'}
-Plug 'tpope/vim-endwise', {'for': 'ruby'}
+" Autocomplete
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
 
-" Themes
-Plug 'altercation/vim-colors-solarized'
-Plug 'w0ng/vim-hybrid'
-Plug 'tomasr/molokai'
-Plug 'rakr/vim-togglebg'
-Plug 'rakr/vim-two-firewatch'
+" Languages
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+Plug 'elixir-editors/vim-elixir'
 
 call plug#end()
 
-set background=light
-colorscheme PaperColor
+" set background=light
+" colorscheme PaperColor
 
-" set background=dark
-" colorscheme gruvbox
+set background=dark
+colorscheme molokai
 
 " Change leader
 nnoremap <SPACE> <Nop>
 let mapleader = " "
 let g:mapleader = " "
-
-" Wildmenu
-set wildmenu
-set wildmode=list:longest
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip
-set wildignore+=.hg,.git,.svn                    " Version control
-set wildignore+=*.aux,*.out,*.toc                " LaTeX intermediate files
-set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
-set wildignore+=*.spl,*.sw?,*.DS_Store,*.luac,*.pyc,**.class
-set wildignore+=bower_components,vendor/bundle,public
-set wildignore+=node_modules
-set wildcharm=<Tab>
-set rtp+=~/.vim
-
-let g:netrw_liststyle= 1
 
 " Resize splits when the window is resized
 au VimResized * exe "normal! \<c-w>="
@@ -98,8 +67,7 @@ set history=1000                        " remember more commands and search hist
 set undolevels=1000                     " use many muchos levels of undo
 set visualbell                          " don't beep
 set noerrorbells                        " don't beep
-set cc=100
-set re=1
+set wildcharm=<Tab>
 
 " Default Tabs & spaces
 set tabstop=2     " a tab is two spaces
@@ -116,105 +84,46 @@ set cursorline    " highlight current line
 " Hide scrollbars
 set guioptions=Ace
 
-set statusline=\ %n
-set statusline+=\ %f
-set statusline+=\ %m
-set statusline+=%=
-set statusline+=\ %y
+" set statusline=\ %n
+" set statusline+=\ %f
+" set statusline+=\ %m
+" set statusline+=%=
+" set statusline+=\ %y
 
 " Plugin Configurations
 """""""""""""""""""""""
-
-let g:UltiSnipsUsePythonVersion = 2
-let g:UltiSnipsSnippetsDir="~/.vimrc/snippets"
-let g:UltiSnipsEditSplit="vertical"
-
-
-filetype indent plugin on
-au BufNewFile,BufRead *.cjsx set filetype=coffee
-au BufNewFile,BufRead *.frag set filetype=hlsl
-
-au BufNewFile,BufRead * set relativenumber
-
-let g:rehash256 = 1
-
-let g:fzf_buffers_jump = 1
-
-
 " Trim trailing whitespace on save
 autocmd BufWritePre * :%s/\s\+$//e
 
-" format js files
-let g:ale_javascript_eslint_use_global = 1
-let g:ale_linters = {
-\   'javascript': ['eslint'],
-\}
+let g:deoplete#enable_at_startup = 1
+let g:neosnippet#snippets_directory = '~/.vim/snippets'
 
-let g:ale_fixers = {}
-let g:ale_fixers.javascript = ['eslint']
-let g:ale_fix_on_save=1
+imap <expr><TAB>  (neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>")
+imap <expr><S-TAB> "\<S-TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
-
-let g:jsx_ext_required = 0
-
-" vim pasta
-let g:pasta_disabled_filetypes = ['python', 'coffee', 'yaml']
-
-let g:gutentags_ctags_executable_ruby = 'jsctags'
-
-" Gross hack to make c-h work to move left a split
-if has('nvim')
-  nmap <bs> <c-w>h
+cnoreabbrev Ack Ack!
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
 endif
 
-if has('gui_running')
-  set guifont=Source_Code_Pro:h14
-endif
-
-call togglebg#map("<F5>")
-
-let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
-
-let g:incsearch#auto_nohlsearch = 1
-
-map / <Plug>(incsearch-forward)
-map g/ <Plug>(incsearch-stay)
-
-" Dont indent chained functions
+let g:golden_ratio_exclude_nonmodifiable = 1
 let g:javascript_opfirst = 1
-
-" deoplete
-let g:deoplete#enable_at_startup = 1
-call deoplete#custom#set('ultisnips', 'matchers', ['matcher_fuzzy'])
-let deoplete#tag#cache_limit_size = 5000000
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#sources = {}
-let g:deoplete#sources._ = ['buffer', 'tag', 'file', 'member', 'ultisnips']
-
-
-let g:UltiSnipsUsePythonVersion = 3
 
 " Key Bindings
 """""""""""""""""""""""
-
-" " keybindings for easier switching between splits
-" nnoremap <C-J> <C-W><C-J>
-" nnoremap <C-K> <C-W><C-K>
-" nnoremap <C-L> <C-W><C-L>
-" nnoremap <C-H> <C-W><C-H>
 
 "make < > shifts keep selection
 vnoremap < <gv
 vnoremap > >gv
 
-" FZF bindings
-nnoremap \ :Ag<Space>
-nnoremap <leader>o :execute 'Ag ' . expand("<cword>")<CR>
+nnoremap \ :Ack!<space>
 
-nnoremap <leader>b  :Buffers<CR>
-nnoremap <leader>f :Files <CR>
-" Search tags for word under cursor
-nnoremap <leader>t :execute 'Tags ' . expand("<cword>")<CR>
+nnoremap <leader>b :ls<CR>
+nnoremap <leader>f :FZF <CR>
+
+nnoremap <leader>q :q<CR>
 
 " Open files
 nnoremap <leader>d :vsp %:h/<Tab>
@@ -223,18 +132,11 @@ nnoremap <leader>e :e %:h/<Tab>
 nnoremap <leader><space> :noh<cr>
 vnoremap <leader><space> <esc>:noh<cr>
 
-" Git stuff
-nnoremap <leader>gs :Gstatus<CR>
-nnoremap <leader>gd :Gdiff<CR>
-nnoremap <leader>gb :Gblame<CR>
-
 nnoremap <leader>c  :ccl<CR>:lclose<CR>
 
 nnoremap - :Ex<cr>
 
 nnoremap <leader>s  :w<CR>
-
-nnoremap <leader>r :QuickFixDo :%s//gce<left><left><left><left>
 
 cnoremap jk <ESC>
 inoremap jk <ESC>
@@ -242,11 +144,12 @@ inoremap jk <ESC>
 " Open vimrc in a split
 nnoremap <leader>v :vsp ~/.vimrc<CR>
 
-" nnoremap <leader>p :bot 20split | terminal pgcli accio-api<CR>
-
 " stupid kinesis
 noremap <Up> <NOP>
 noremap <Down> <NOP>
 noremap <Left> <NOP>
 noremap <Right> <NOP>
 
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
