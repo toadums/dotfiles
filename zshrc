@@ -53,6 +53,9 @@ alias vi="nvim"
 alias docker_clean_images='docker rmi $(docker images -a --filter=dangling=true -q)'
 alias docker_clean_ps='docker rm $(docker ps --filter=status=exited --filter=status=created -q)'
 
+alias opta="cd ~/code/metalab/optavia"
+alias metablog="cd ~/go/src/github.com/metalabdesign/metablog"
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [[ -s "$HOME/.avn/bin/avn.sh" ]] && source "$HOME/.avn/bin/avn.sh" # load avn
 
@@ -91,8 +94,16 @@ zle     -N   fzf-git-file-widget
 bindkey "^G" fzf-git-file-widget
 
 export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
-source /usr/local/bin/virtualenvwrapper.sh
-source ~/envs/default/bin/activate
+# source /usr/local/bin/virtualenvwrapper.sh
+# source ~/envs/default/bin/activate
 
 # for tmuxp
 export DISABLE_AUTO_TITLE='true'
+
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+
+export PATH="/usr/local/bin:${PATH}"
+
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin
