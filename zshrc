@@ -4,7 +4,7 @@
 # Path to your oh-my-zsh installation.
 export ZSH=/Users/pauldemchuk/.oh-my-zsh
 
-ZSH_THEME=steeef
+ZSH_THEME="sobole"
 
 plugins=(git)
 
@@ -12,11 +12,7 @@ source $ZSH/oh-my-zsh.sh
 #
 # User configuration
 
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vim'
-else
-  export EDITOR='nvim'
-fi
+export EDITOR='nvim'
 
 ulimit -n 10000
 
@@ -40,6 +36,7 @@ alias gb="git branch"
 alias gd="git diff"
 alias ga="git add -ip"
 alias gc="git checkout"
+alias gcb='git checkout $(git branch | fzf)'
 alias gl="git log --oneline --decorate"
 alias gt="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 alias gn="git rev-list --left-right --count"
@@ -93,17 +90,29 @@ fzf-git-file-widget() {
 zle     -N   fzf-git-file-widget
 bindkey "^G" fzf-git-file-widget
 
-export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
+# export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python2
 # source /usr/local/bin/virtualenvwrapper.sh
 # source ~/envs/default/bin/activate
 
 # for tmuxp
 export DISABLE_AUTO_TITLE='true'
 
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
 
 export PATH="/usr/local/bin:${PATH}"
 
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
+export PATH=$PATH:~/flutter/flutter/bin
+export PATH="/usr/local/opt/python/libexec/bin:$PATH"
+export GO111MODULE=on
+export PATH=$PATH:/Library/Frameworks/GStreamer.framework/Commands
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+# Homebrew ruby will be used if we don't use rbenv
+# export PATH="/usr/local/opt/ruby/bin:$PATH"
+
+export PATH="/usr/local/bin/rubocop-daemon-wrapper:$PATH"
+export RUBOCOP_DAEMON_USE_BUNDLER=true
+
+eval "$(rbenv init -)"
