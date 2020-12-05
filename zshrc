@@ -2,11 +2,14 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/pauldemchuk/.oh-my-zsh
+export ZSH=/Users/toadums/.oh-my-zsh
 
 ZSH_THEME="sobole"
 
-plugins=(git)
+plugins=(
+	git
+	zsh-syntax-highlighting
+)
 
 source $ZSH/oh-my-zsh.sh
 #
@@ -23,13 +26,9 @@ export PGDATA=~/pgdb
 export SSH_KEY_PATH="~/.ssh/rsa_id"
 
 # aliases
-alias rn="cd ~/code/accio/rn"
-alias ac="cd ~/code/accio"
-
-alias asm="cd ~/code/consulting/upwords/assembly"
-alias coar="cd ~/code/ruboss/coar"
 
 alias :q="exit"
+alias b="bundle exec"
 
 alias gs="git status -s"
 alias gb="git branch"
@@ -47,24 +46,11 @@ alias gp='git push origin HEAD'
 alias ls="ls -F1aG"
 alias vi="nvim"
 
-alias docker_clean_images='docker rmi $(docker images -a --filter=dangling=true -q)'
-alias docker_clean_ps='docker rm $(docker ps --filter=status=exited --filter=status=created -q)'
-
-alias opta="cd ~/code/metalab/optavia"
-alias metablog="cd ~/go/src/github.com/metalabdesign/metablog"
-
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-[[ -s "$HOME/.avn/bin/avn.sh" ]] && source "$HOME/.avn/bin/avn.sh" # load avn
 
 alias ag='ag --path-to-ignore ~/.agignore'
 
 export FZF_DEFAULT_COMMAND='ag -g ""'
-export WORKON_HOME=~/envs
-
-export ANDROID_HOME=~/Library/Android/sdk/
-export PATH=$ANDROID_HOME/platform-tools:$PATH
-export PATH=$ANDROID_HOME/tools:$PATH
-export ANDROID_NDK=/Users/pauldemchuk/android-ndk
 
 # CTRL-G - Paste the selected git modified file path(s) into the command line
 # Copy paste from the oracle
@@ -90,29 +76,13 @@ fzf-git-file-widget() {
 zle     -N   fzf-git-file-widget
 bindkey "^G" fzf-git-file-widget
 
-# export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python2
-# source /usr/local/bin/virtualenvwrapper.sh
-# source ~/envs/default/bin/activate
-
-# for tmuxp
-export DISABLE_AUTO_TITLE='true'
-
-
 export PATH="/usr/local/bin:${PATH}"
 
-export GOPATH=$HOME/go
-export PATH=$PATH:$GOPATH/bin
-export PATH=$PATH:~/flutter/flutter/bin
-export PATH="/usr/local/opt/python/libexec/bin:$PATH"
-export GO111MODULE=on
-export PATH=$PATH:/Library/Frameworks/GStreamer.framework/Commands
-
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
-# Homebrew ruby will be used if we don't use rbenv
-# export PATH="/usr/local/opt/ruby/bin:$PATH"
-
-export PATH="/usr/local/bin/rubocop-daemon-wrapper:$PATH"
-export RUBOCOP_DAEMON_USE_BUNDLER=true
-
 eval "$(rbenv init -)"
+
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/toadums/Library/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/toadums/Library/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/toadums/Library/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/toadums/Library/google-cloud-sdk/completion.zsh.inc'; fi
