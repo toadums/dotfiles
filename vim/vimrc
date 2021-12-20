@@ -147,8 +147,6 @@ endif
 vnoremap < <gv
 vnoremap > >gv
 
-nnoremap \ :Ag<space>
-
 nnoremap <leader>b :Buffers<CR>
 nnoremap <leader>f :Files <CR>
 nnoremap <leader>g :GFiles?<CR>

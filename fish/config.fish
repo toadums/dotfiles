@@ -17,3 +17,9 @@ alias ls="ls -F1aG"
 fish_add_path /opt/homebrew/opt/ruby/bin
 
 alias vi="nvim"
+
+set PATH /usr/local/bin $PATH
+set PATH /Applications/Postgres.app/Contents/Versions/latest/bin $PATH
+set PATH $HOME/n/bin $PATH
+
+set -Ux N_PREFIX $HOME/n/
