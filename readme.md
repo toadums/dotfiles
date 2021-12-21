@@ -61,7 +61,12 @@ sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.
 brew install node
 
 # enable yarn
+
+## If on ode 16.10+
 corepack enable
+
+## Otherwise
+npm install --global yarn
 
 # Because we are setting the N_PREFIX in our config.fish our node versions
 # will be installed in ~/n to get around any permission issues
