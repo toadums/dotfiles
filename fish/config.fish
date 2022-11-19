@@ -18,8 +18,14 @@ fish_add_path /opt/homebrew/opt/ruby/bin
 
 alias vi="nvim"
 
+set -x ANDROID_SDK_ROOT $HOME/Library/Android/sdk
+
 set PATH /usr/local/bin $PATH
 set PATH /Applications/Postgres.app/Contents/Versions/latest/bin $PATH
 set PATH $HOME/n/bin $PATH
+set PATH $ANDROID_SDK_ROOT/emulator $PATH
+set PATH $ANDROID_SDK_ROOT/platform-tools $PATH
 
 set -Ux N_PREFIX $HOME/n/
+
+status --is-interactive; and rbenv init - fish | source

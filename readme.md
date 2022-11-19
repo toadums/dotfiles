@@ -62,15 +62,17 @@ brew install node
 
 # enable yarn
 
-## If on ode 16.10+
+## If on node 16.10+
 corepack enable
 
 ## Otherwise
 npm install --global yarn
 
-# Because we are setting the N_PREFIX in our config.fish our node versions
-# will be installed in ~/n to get around any permission issues
-npm install -g n
+## Install n with sudo. But since we're setting N_PREFIX node versions will be
+## installed in ~/n to get around any permission errors
+sudo npm install -g n
+
+## Make the ~/n directory which matches our N_PREFIX env var
 mkdir ~/n
 ```
 
