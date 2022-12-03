@@ -52,8 +52,24 @@ mkdir -p ~/.config/nvim
 ln -s `pwd`/vim/init.vim $HOME/.config/nvim/init.vim
 ln -s `pwd`/vim/vimrc $HOME/.vimrc
 
-# vim-plug
-sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+# Plug
+sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+
+# Install language servers
+brew install lua-language-server
+npm install -g typescript typescript-language-server
+npm install -g @tailwindcss/language-server
+
+# Install ripgrep (used by telescope)
+brew install ripgrep
+
+# Install font for telescope
+brew tap homebrew/cask-fonts
+brew install --cask font-hack-nerd-font
+
+# Install eslint_d
+npm install -g eslint_d
 ```
 
 ## node
