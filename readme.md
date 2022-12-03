@@ -49,8 +49,7 @@ brew install neovim
 
 mkdir -p ~/.config/nvim
 
-ln -s `pwd`/vim/init.vim $HOME/.config/nvim/init.vim
-ln -s `pwd`/vim/vimrc $HOME/.vimrc
+ln -s ~/.dotfiles/nvim/ ~/.config/nvim/
 
 # Plug
 sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
