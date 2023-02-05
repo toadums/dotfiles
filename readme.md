@@ -8,6 +8,9 @@
 # Setup
 I decided to post steps here instead of creating a setup file.
 
+## Get XCode downloading
+Start the download from the App Store. You can do this while you continue with the rest of the steps, they don't depend on having XCode installed.
+
 ## Install xcode tools
 ```sh
 xcode-select --install
