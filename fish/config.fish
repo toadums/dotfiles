@@ -14,7 +14,9 @@ alias gl="git log --oneline --decorate"
 alias gpull='git pull --rebase origin (git rev-parse --abbrev-ref HEAD)'
 
 alias ls="ls -F1aG"
+
 fish_add_path /opt/homebrew/opt/ruby/bin
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
 alias vi="nvim"
 

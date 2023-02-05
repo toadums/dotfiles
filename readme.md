@@ -49,7 +49,7 @@ brew install neovim
 
 mkdir -p ~/.config/nvim
 
-ln -s ~/.dotfiles/nvim/ ~/.config/nvim/
+ln -s ~/.dotfiles/nvim ~/.config/nvim
 
 # Plug
 sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
@@ -93,12 +93,25 @@ mkdir ~/n
 
 ## git
 ```sh
-ln -s `pwd`/gitconfig $HOME/.gitconfig
+ln -s ~/.dotfiles/gitconfig ~/.gitconfig
 ```
 
 ## Manually install apps
+- Install XCode
+- Install XCode CLI tools:
+  - Preferences
+  - Locations
+  - Install most recent CLI Tool
 - Install [iTerm2](https://iterm2.com)
   - Enable setting sync - see ./iterm2/readme.md
-- Install [postgres.app](https://postgresapp.com/downloads.html)
+- Install [postgres.app](hrttps://postgresapp.com/downloads.html)
 - Install [VsCode](https://code.visualstudio.com)
   - Enable settings sync from VsCode command palette
+
+## VSCode
+
+```sh
+## Enable fast key repeat
+
+defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false
+```
