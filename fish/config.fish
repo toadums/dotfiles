@@ -26,6 +26,9 @@ set PATH $HOME/n/bin $PATH
 set PATH $ANDROID_SDK_ROOT/emulator $PATH
 set PATH $ANDROID_SDK_ROOT/platform-tools $PATH
 
+set -Ux ANDROID_HOME $HOME/Library/Android/sdk
+set -Ux JAVA_HOME $(/usr/libexec/java_home)
+
 set -Ux N_PREFIX $HOME/n/
 
 status --is-interactive; and rbenv init - fish | source
