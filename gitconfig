@@ -6,6 +6,9 @@
 	co = checkout
   cleanup = !git remote prune origin && git gc && git clean -df && git stash clear
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+  recent = "!r() { count=$1; git for-each-ref --sort=-committerdate refs/heads --format='%(HEAD)%(color:yellow)%(refname:short)|%(color:bold green)%(committerdate:relative)|%(color:blue)%(subject)|%(color:magenta)%(authorname)%(color:reset)' --color=always --count=${count:=10} | column -ts'|';}; r"
+
+
 
 [color]
 	diff = auto
@@ -13,7 +16,7 @@
 	branch = auto
 
 [core]
-	editor = nvim --noplugin
+	editor = nvim
 	excludesfile = /Users/pauldemchuk/.gitignore
 
 [push]
