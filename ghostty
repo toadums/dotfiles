@@ -1,0 +1,9 @@
+# theme = Catppuccin Latte
+font-family = "Zed Mono Extended"
+font-size = 16
+
+keybind = global:ctrl+enter=toggle_visibility
+keybind = cmd+shift+r=reload_config
+
+unfocused-split-opacity = 0.48
+keybind = shift+enter=text:\n
